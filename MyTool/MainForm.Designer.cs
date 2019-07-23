@@ -1,13 +1,13 @@
-﻿namespace CommonLibrary
+﻿namespace MyTool
 {
-    partial class PicShow
+    partial class MainForm
     {
-        /// <summary> 
+        /// <summary>
         /// 必需的设计器变量。
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary> 
+        /// <summary>
         /// 清理所有正在使用的资源。
         /// </summary>
         /// <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
@@ -20,41 +20,42 @@
             base.Dispose(disposing);
         }
 
-        #region 组件设计器生成的代码
+        #region Windows 窗体设计器生成的代码
 
-        /// <summary> 
+        /// <summary>
         /// 设计器支持所需的方法 - 不要修改
         /// 使用代码编辑器修改此方法的内容。
         /// </summary>
         private void InitializeComponent()
         {
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.LoadAndProcess = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // pictureBox1
+            // LoadAndProcess
             // 
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(434, 419);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
+            this.LoadAndProcess.Location = new System.Drawing.Point(55, 22);
+            this.LoadAndProcess.Name = "LoadAndProcess";
+            this.LoadAndProcess.Size = new System.Drawing.Size(138, 52);
+            this.LoadAndProcess.TabIndex = 0;
+            this.LoadAndProcess.Text = "加载并处理";
+            this.LoadAndProcess.UseVisualStyleBackColor = true;
+            this.LoadAndProcess.Click += new System.EventHandler(this.LoadAndProcess_Click);
             // 
-            // PicShow
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.pictureBox1);
-            this.Name = "PicShow";
-            this.Size = new System.Drawing.Size(434, 419);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.ClientSize = new System.Drawing.Size(230, 99);
+            this.Controls.Add(this.LoadAndProcess);
+            this.Name = "MainForm";
+            this.Text = "Form1";
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Button LoadAndProcess;
     }
 }
+
