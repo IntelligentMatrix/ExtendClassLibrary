@@ -9,9 +9,41 @@
     <EntitySet Name="CentralConfigSet" EntityType="DataEF.Store.CentralConfigSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="HostContextSet" EntityType="DataEF.Store.HostContextSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Users" EntityType="DataEF.Store.Users" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Solutions" EntityType="DataEF.Store.Solutions" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Plcs" EntityType="DataEF.Store.Plcs" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Projects" EntityType="DataEF.Store.Projects" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DataBases" EntityType="DataEF.Store.DataBases" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PlcLists" EntityType="DataEF.Store.PlcLists" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProjectLists" EntityType="DataEF.Store.ProjectLists" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DataBaseLists" EntityType="DataEF.Store.DataBaseLists" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="OptionTypes" EntityType="DataEF.Store.OptionTypes" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="CentralConfigHostContext" Association="DataEF.Store.CentralConfigHostContext">
       <End Role="CentralConfig" EntitySet="CentralConfigSet" />
       <End Role="HostContext" EntitySet="HostContextSet" />
+    </AssociationSet>
+    <AssociationSet Name="SolutionProject" Association="DataEF.Store.SolutionProject">
+      <End Role="Solution" EntitySet="Solutions" />
+      <End Role="Project" EntitySet="Projects" />
+    </AssociationSet>
+    <AssociationSet Name="SolutionDataBase" Association="DataEF.Store.SolutionDataBase">
+      <End Role="Solution" EntitySet="Solutions" />
+      <End Role="DataBase" EntitySet="DataBases" />
+    </AssociationSet>
+    <AssociationSet Name="PlcPlcList" Association="DataEF.Store.PlcPlcList">
+      <End Role="Plc" EntitySet="Plcs" />
+      <End Role="PlcList" EntitySet="PlcLists" />
+    </AssociationSet>
+    <AssociationSet Name="ProjectProjectList" Association="DataEF.Store.ProjectProjectList">
+      <End Role="Project" EntitySet="Projects" />
+      <End Role="ProjectList" EntitySet="ProjectLists" />
+    </AssociationSet>
+    <AssociationSet Name="DataBaseDataBaseList" Association="DataEF.Store.DataBaseDataBaseList">
+      <End Role="DataBase" EntitySet="DataBases" />
+      <End Role="DataBaseList" EntitySet="DataBaseLists" />
+    </AssociationSet>
+    <AssociationSet Name="SolutionPlc" Association="DataEF.Store.SolutionPlc">
+      <End Role="Solution" EntitySet="Solutions" />
+      <End Role="Plc" EntitySet="Plcs" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="CentralConfigSet">
@@ -28,7 +60,7 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="CentralConfigId" Type="int" Nullable="false" />
-    <Property Name="ModelNo" Type="smallint" Nullable="false" />
+    <Property Name="ModelId" Type="smallint" Nullable="false" />
     <Property Name="ModelType" Type="nvarchar(max)" Nullable="false" />
     <Property Name="ModelParameter" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
@@ -41,6 +73,74 @@
     <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
     <Property Name="IsAdmin" Type="bit" Nullable="false" />
   </EntityType>
+  <EntityType Name="Solutions">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SolutionName" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Plcs">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SolutionId" Type="int" Nullable="false" />
+    <Property Name="Type" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Projects">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SolutionId" Type="int" Nullable="false" />
+    <Property Name="Type" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DataBases">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SolutionId" Type="int" Nullable="false" />
+    <Property Name="Type" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PlcLists">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PlcId" Type="int" Nullable="false" />
+    <Property Name="PlceListName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="PlceListParas" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="PlceListComponent" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProjectLists">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProjectId" Type="int" Nullable="false" />
+    <Property Name="ProjectListName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ProjectListParas" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ProjectListComponent" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DataBaseLists">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DataBaseId" Type="int" Nullable="false" />
+    <Property Name="DataBaseListName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DataBaseListParas" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DataBaseListComponent" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OptionTypes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Type" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
   <Association Name="CentralConfigHostContext">
     <End Role="CentralConfig" Type="DataEF.Store.CentralConfigSet" Multiplicity="1" />
     <End Role="HostContext" Type="DataEF.Store.HostContextSet" Multiplicity="*" />
@@ -50,6 +150,78 @@
       </Principal>
       <Dependent Role="HostContext">
         <PropertyRef Name="CentralConfigId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SolutionProject">
+    <End Role="Solution" Type="DataEF.Store.Solutions" Multiplicity="1" />
+    <End Role="Project" Type="DataEF.Store.Projects" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Solution">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Project">
+        <PropertyRef Name="SolutionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SolutionDataBase">
+    <End Role="Solution" Type="DataEF.Store.Solutions" Multiplicity="1" />
+    <End Role="DataBase" Type="DataEF.Store.DataBases" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Solution">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DataBase">
+        <PropertyRef Name="SolutionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PlcPlcList">
+    <End Role="Plc" Type="DataEF.Store.Plcs" Multiplicity="1" />
+    <End Role="PlcList" Type="DataEF.Store.PlcLists" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Plc">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PlcList">
+        <PropertyRef Name="PlcId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ProjectProjectList">
+    <End Role="Project" Type="DataEF.Store.Projects" Multiplicity="1" />
+    <End Role="ProjectList" Type="DataEF.Store.ProjectLists" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Project">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProjectList">
+        <PropertyRef Name="ProjectId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="DataBaseDataBaseList">
+    <End Role="DataBase" Type="DataEF.Store.DataBases" Multiplicity="1" />
+    <End Role="DataBaseList" Type="DataEF.Store.DataBaseLists" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DataBase">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DataBaseList">
+        <PropertyRef Name="DataBaseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SolutionPlc">
+    <End Role="Solution" Type="DataEF.Store.Solutions" Multiplicity="1" />
+    <End Role="Plc" Type="DataEF.Store.Plcs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Solution">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Plc">
+        <PropertyRef Name="SolutionId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -65,6 +237,38 @@
             <End Role="HostContext" EntitySet="HostContextSet" />
           </AssociationSet>
           <EntitySet Name="Users" EntityType="DataEF.User" />
+          <EntitySet Name="Solutions" EntityType="DataEF.Solution" />
+          <EntitySet Name="Plcs" EntityType="DataEF.Plc" />
+          <EntitySet Name="Projects" EntityType="DataEF.Project" />
+          <EntitySet Name="DataBases" EntityType="DataEF.DataBase" />
+          <EntitySet Name="PlcLists" EntityType="DataEF.PlcList" />
+          <EntitySet Name="ProjectLists" EntityType="DataEF.ProjectList" />
+          <EntitySet Name="DataBaseLists" EntityType="DataEF.DataBaseList" />
+          <AssociationSet Name="SolutionProject" Association="DataEF.SolutionProject">
+            <End Role="Solution" EntitySet="Solutions" />
+            <End Role="Project" EntitySet="Projects" />
+          </AssociationSet>
+          <AssociationSet Name="SolutionDataBase" Association="DataEF.SolutionDataBase">
+            <End Role="Solution" EntitySet="Solutions" />
+            <End Role="DataBase" EntitySet="DataBases" />
+          </AssociationSet>
+          <AssociationSet Name="PlcPlcList" Association="DataEF.PlcPlcList">
+            <End Role="Plc" EntitySet="Plcs" />
+            <End Role="PlcList" EntitySet="PlcLists" />
+          </AssociationSet>
+          <AssociationSet Name="ProjectProjectList" Association="DataEF.ProjectProjectList">
+            <End Role="Project" EntitySet="Projects" />
+            <End Role="ProjectList" EntitySet="ProjectLists" />
+          </AssociationSet>
+          <AssociationSet Name="DataBaseDataBaseList" Association="DataEF.DataBaseDataBaseList">
+            <End Role="DataBase" EntitySet="DataBases" />
+            <End Role="DataBaseList" EntitySet="DataBaseLists" />
+          </AssociationSet>
+          <AssociationSet Name="SolutionPlc" Association="DataEF.SolutionPlc">
+            <End Role="Solution" EntitySet="Solutions" />
+            <End Role="Plc" EntitySet="Plcs" />
+          </AssociationSet>
+          <EntitySet Name="OptionTypes" EntityType="DataEF.OptionType" />
         </EntityContainer>
         <EntityType Name="CentralConfig">
           <Key>
@@ -107,6 +311,158 @@
           <Property Name="Password" Type="String" Nullable="false" />
           <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
         </EntityType>
+        <EntityType Name="Solution">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SolutionName" Type="String" Nullable="false" />
+          <NavigationProperty Name="Projects" Relationship="DataEF.SolutionProject" FromRole="Solution" ToRole="Project" />
+          <NavigationProperty Name="DataBases" Relationship="DataEF.SolutionDataBase" FromRole="Solution" ToRole="DataBase" />
+          <NavigationProperty Name="Plcs" Relationship="DataEF.SolutionPlc" FromRole="Solution" ToRole="Plc" />
+        </EntityType>
+        <EntityType Name="Plc">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SolutionId" Type="Int32" Nullable="false" />
+          <Property Name="Type" Type="String" Nullable="false" />
+          <NavigationProperty Name="PlcLists" Relationship="DataEF.PlcPlcList" FromRole="Plc" ToRole="PlcList" />
+          <NavigationProperty Name="Solution" Relationship="DataEF.SolutionPlc" FromRole="Plc" ToRole="Solution" />
+        </EntityType>
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SolutionId" Type="Int32" Nullable="false" />
+          <Property Name="Type" Type="String" Nullable="false" />
+          <NavigationProperty Name="Solution" Relationship="DataEF.SolutionProject" FromRole="Project" ToRole="Solution" />
+          <NavigationProperty Name="ProjectLists" Relationship="DataEF.ProjectProjectList" FromRole="Project" ToRole="ProjectList" />
+        </EntityType>
+        <EntityType Name="DataBase">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SolutionId" Type="Int32" Nullable="false" />
+          <Property Name="Type" Type="String" Nullable="false" />
+          <NavigationProperty Name="Solution" Relationship="DataEF.SolutionDataBase" FromRole="DataBase" ToRole="Solution" />
+          <NavigationProperty Name="DataBaseLists" Relationship="DataEF.DataBaseDataBaseList" FromRole="DataBase" ToRole="DataBaseList" />
+        </EntityType>
+        <EntityType Name="PlcList">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PlcId" Type="Int32" Nullable="false" />
+          <Property Name="PlceListName" Type="String" Nullable="false" />
+          <Property Name="PlceListParas" Type="String" Nullable="false" />
+          <Property Name="PlceListComponent" Type="String" Nullable="false" />
+          <NavigationProperty Name="Plc" Relationship="DataEF.PlcPlcList" FromRole="PlcList" ToRole="Plc" />
+        </EntityType>
+        <EntityType Name="ProjectList">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProjectId" Type="Int32" Nullable="false" />
+          <Property Name="ProjectListName" Type="String" Nullable="false" />
+          <Property Name="ProjectListParas" Type="String" Nullable="false" />
+          <Property Name="ProjectListComponent" Type="String" Nullable="false" />
+          <NavigationProperty Name="Project" Relationship="DataEF.ProjectProjectList" FromRole="ProjectList" ToRole="Project" />
+        </EntityType>
+        <EntityType Name="DataBaseList">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DataBaseId" Type="Int32" Nullable="false" />
+          <Property Name="DataBaseListName" Type="String" Nullable="false" />
+          <Property Name="DataBaseListParas" Type="String" Nullable="false" />
+          <Property Name="DataBaseListComponent" Type="String" Nullable="false" />
+          <NavigationProperty Name="DataBase" Relationship="DataEF.DataBaseDataBaseList" FromRole="DataBaseList" ToRole="DataBase" />
+        </EntityType>
+        <Association Name="SolutionProject">
+          <End Type="DataEF.Solution" Role="Solution" Multiplicity="1" />
+          <End Type="DataEF.Project" Role="Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Solution">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Project">
+              <PropertyRef Name="SolutionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SolutionDataBase">
+          <End Type="DataEF.Solution" Role="Solution" Multiplicity="1" />
+          <End Type="DataEF.DataBase" Role="DataBase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Solution">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DataBase">
+              <PropertyRef Name="SolutionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PlcPlcList">
+          <End Type="DataEF.Plc" Role="Plc" Multiplicity="1" />
+          <End Type="DataEF.PlcList" Role="PlcList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Plc">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PlcList">
+              <PropertyRef Name="PlcId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ProjectProjectList">
+          <End Type="DataEF.Project" Role="Project" Multiplicity="1" />
+          <End Type="DataEF.ProjectList" Role="ProjectList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectList">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DataBaseDataBaseList">
+          <End Type="DataEF.DataBase" Role="DataBase" Multiplicity="1" />
+          <End Type="DataEF.DataBaseList" Role="DataBaseList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DataBase">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DataBaseList">
+              <PropertyRef Name="DataBaseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SolutionPlc">
+          <End Type="DataEF.Solution" Role="Solution" Multiplicity="1" />
+          <End Type="DataEF.Plc" Role="Plc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Solution">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Plc">
+              <PropertyRef Name="SolutionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="OptionType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="String" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -127,7 +483,7 @@
         <MappingFragment StoreEntitySet="HostContextSet">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="CentralConfigId" ColumnName="CentralConfigId" />
-          <ScalarProperty Name="ModelId" ColumnName="ModelNo" />
+          <ScalarProperty Name="ModelId" ColumnName="ModelId" />
           <ScalarProperty Name="ModelType" ColumnName="ModelType" />
           <ScalarProperty Name="ModelParameter" ColumnName="ModelParameter" />
         </MappingFragment>
@@ -140,6 +496,82 @@
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Password" ColumnName="Password" />
           <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Solutions">
+      <EntityTypeMapping TypeName="IsTypeOf(DataEF.Solution)">
+        <MappingFragment StoreEntitySet="Solutions">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="SolutionName" ColumnName="SolutionName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Plcs">
+      <EntityTypeMapping TypeName="IsTypeOf(DataEF.Plc)">
+        <MappingFragment StoreEntitySet="Plcs">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="SolutionId" ColumnName="SolutionId" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Projects">
+      <EntityTypeMapping TypeName="IsTypeOf(DataEF.Project)">
+        <MappingFragment StoreEntitySet="Projects">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="SolutionId" ColumnName="SolutionId" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DataBases">
+      <EntityTypeMapping TypeName="IsTypeOf(DataEF.DataBase)">
+        <MappingFragment StoreEntitySet="DataBases">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="SolutionId" ColumnName="SolutionId" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PlcLists">
+      <EntityTypeMapping TypeName="IsTypeOf(DataEF.PlcList)">
+        <MappingFragment StoreEntitySet="PlcLists">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="PlcId" ColumnName="PlcId" />
+          <ScalarProperty Name="PlceListName" ColumnName="PlceListName" />
+          <ScalarProperty Name="PlceListParas" ColumnName="PlceListParas" />
+          <ScalarProperty Name="PlceListComponent" ColumnName="PlceListComponent" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProjectLists">
+      <EntityTypeMapping TypeName="IsTypeOf(DataEF.ProjectList)">
+        <MappingFragment StoreEntitySet="ProjectLists">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+          <ScalarProperty Name="ProjectListName" ColumnName="ProjectListName" />
+          <ScalarProperty Name="ProjectListParas" ColumnName="ProjectListParas" />
+          <ScalarProperty Name="ProjectListComponent" ColumnName="ProjectListComponent" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DataBaseLists">
+      <EntityTypeMapping TypeName="IsTypeOf(DataEF.DataBaseList)">
+        <MappingFragment StoreEntitySet="DataBaseLists">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="DataBaseId" ColumnName="DataBaseId" />
+          <ScalarProperty Name="DataBaseListName" ColumnName="DataBaseListName" />
+          <ScalarProperty Name="DataBaseListParas" ColumnName="DataBaseListParas" />
+          <ScalarProperty Name="DataBaseListComponent" ColumnName="DataBaseListComponent" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OptionTypes">
+      <EntityTypeMapping TypeName="IsTypeOf(DataEF.OptionType)">
+        <MappingFragment StoreEntitySet="OptionTypes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

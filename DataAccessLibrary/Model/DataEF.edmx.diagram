@@ -4,11 +4,25 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="ea489f54e07848b0afd8a456e6e210db" Name="Diagram1" DisplayType="true" >
-        <EntityTypeShape EntityType="DataEF.CentralConfig" Width="2.875" PointX="0.625" PointY="0.5" />
-        <EntityTypeShape EntityType="DataEF.HostContext" Width="2.75" PointX="4.5" PointY="0.625" />
+      <Diagram DiagramId="ea489f54e07848b0afd8a456e6e210db" Name="Diagram1" DisplayType="true" ZoomLevel="85" >
+        <EntityTypeShape EntityType="DataEF.CentralConfig" Width="2.875" PointX="0.75" PointY="9.875" />
+        <EntityTypeShape EntityType="DataEF.HostContext" Width="2.75" PointX="4.375" PointY="9.625" />
         <AssociationConnector Association="DataEF.CentralConfigHostContext" />
-        <EntityTypeShape EntityType="DataEF.User" Width="1.5" PointX="0.625" PointY="2.5" />
+        <EntityTypeShape EntityType="DataEF.User" Width="1.875" PointX="0.75" PointY="12.5" />
+        <EntityTypeShape EntityType="DataEF.Solution" Width="1.5" PointX="0.75" PointY="4.125" />
+        <EntityTypeShape EntityType="DataEF.Plc" Width="2.125" PointX="3" PointY="1.375" />
+        <EntityTypeShape EntityType="DataEF.Project" Width="2.125" PointX="3" PointY="4.125" />
+        <EntityTypeShape EntityType="DataEF.DataBase" Width="2.125" PointX="3" PointY="7" />
+        <EntityTypeShape EntityType="DataEF.PlcList" Width="2.875" PointX="6.375" PointY="1.25" />
+        <EntityTypeShape EntityType="DataEF.ProjectList" Width="2.875" PointX="6.375" PointY="4.125" />
+        <EntityTypeShape EntityType="DataEF.DataBaseList" Width="2.875" PointX="6.375" PointY="6.875" />
+        <AssociationConnector Association="DataEF.SolutionProject" />
+        <AssociationConnector Association="DataEF.SolutionDataBase" />
+        <AssociationConnector Association="DataEF.PlcPlcList" />
+        <AssociationConnector Association="DataEF.ProjectProjectList" />
+        <AssociationConnector Association="DataEF.DataBaseDataBaseList" />
+        <AssociationConnector Association="DataEF.SolutionPlc" />
+        <EntityTypeShape EntityType="DataEF.OptionType" Width="1.5" PointX="4.375" PointY="12.625" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

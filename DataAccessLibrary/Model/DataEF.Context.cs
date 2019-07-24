@@ -28,5 +28,13 @@ namespace DataAccessLibrary.Model
         public virtual DbSet<CentralConfig> CentralConfigSet { get; set; }
         public virtual DbSet<HostContext> HostContextSet { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Solution> Solutions { get; set; }
+        public virtual DbSet<Plc> Plcs { get; set; }
+        public virtual DbSet<Project> Projects { get; set; }
+        public virtual DbSet<DataBase> DataBases { get; set; }
+        public virtual DbSet<PlcList> PlcLists { get; set; }
+        public virtual DbSet<ProjectList> ProjectLists { get; set; }
+        public virtual DbSet<DataBaseList> DataBaseLists { get; set; }
+        public virtual DbSet<OptionType> OptionTypes { get; set; }
     }
 }

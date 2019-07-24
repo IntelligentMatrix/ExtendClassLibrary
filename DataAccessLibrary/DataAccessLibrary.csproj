@@ -73,7 +73,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\DataEFEntity.cs" />
     <Compile Include="Model\CentralConfig.cs">
+      <DependentUpon>DataEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DataBase.cs">
+      <DependentUpon>DataEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DataBaseList.cs">
       <DependentUpon>DataEF.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\DataEF.Context.cs">
@@ -94,10 +101,29 @@
     <Compile Include="Model\HostContext.cs">
       <DependentUpon>DataEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\OptionType.cs">
+      <DependentUpon>DataEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Plc.cs">
+      <DependentUpon>DataEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\PlcList.cs">
+      <DependentUpon>DataEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Project.cs">
+      <DependentUpon>DataEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ProjectList.cs">
+      <DependentUpon>DataEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Solution.cs">
+      <DependentUpon>DataEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\User.cs">
       <DependentUpon>DataEF.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SolutionData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
