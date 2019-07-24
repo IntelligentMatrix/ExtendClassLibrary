@@ -22,8 +22,6 @@ namespace CommonLibrary.FormAndUser
         }
         public ConfigForm():this(Environment.MachineName)
         {
-            InitializeComponent();
-
         }
         #endregion
 
@@ -39,7 +37,6 @@ namespace CommonLibrary.FormAndUser
         private void ConfigForm_Load(object sender, EventArgs e)
         {
             DataEFEntity DB = new DataEFEntity();
-            
             comboBox_Option.Items.AddRange(DB.GetOptionType().ToArray());
         }
     }

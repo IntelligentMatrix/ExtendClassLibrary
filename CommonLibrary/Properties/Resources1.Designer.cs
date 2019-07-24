@@ -63,6 +63,16 @@ namespace CommonLibrary.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap Arrow_Left_1_ {
+            get {
+                object obj = ResourceManager.GetObject("Arrow Left(1)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap Delete {
             get {
                 object obj = ResourceManager.GetObject("Delete", resourceCulture);
@@ -75,7 +85,7 @@ namespace CommonLibrary.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Edit_Add {
             get {
-                object obj = ResourceManager.GetObject("Edit Add", resourceCulture);
+                object obj = ResourceManager.GetObject("Edit_Add", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -95,7 +105,7 @@ namespace CommonLibrary.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Save_File {
             get {
-                object obj = ResourceManager.GetObject("Save File", resourceCulture);
+                object obj = ResourceManager.GetObject("Save_File", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
