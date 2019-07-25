@@ -40,7 +40,7 @@ namespace CommonLibrary.FormAndUser
         /// <param name="e"></param>
         private void ConfigForm_Load(object sender, EventArgs e)
         {
-            
+            Mapper.Initialize(cfg => { });
             //初始化Solution名称
             textBox_OptionName.Text = SolutionName;
 
@@ -97,7 +97,8 @@ namespace CommonLibrary.FormAndUser
             {
                 Name = "Test4"
             };
-            Mapper.Initialize(cfg => { cfg.CreateMap<SolutionData, Solution>(); });
+            //Mapper.Initialize(cfg => { cfg.CreateMap<SolutionData, Solution>(); });
+            
             //Solution
             var Solution = (from c in DB.Solutions where c.Name == solution.Name select c).FirstOrDefault();
             if (Solution == null)//如果为空，则创建Solution

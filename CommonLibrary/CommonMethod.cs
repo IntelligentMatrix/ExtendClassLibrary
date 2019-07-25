@@ -159,12 +159,12 @@ namespace CommonLibrary
 
         private static bool ConfigExist(Type srcType, Type destType)
         {
-            return Mapper.Configuration.FindMapper(new TypePair(srcType, destType)) == null;
+            return Mapper.Configuration.FindMapper(new TypePair(srcType, destType)) != null;
         }
 
         private static bool ConfigExist<TSrc, TDest>()
         {
-            return Mapper.Configuration.FindMapper(new TypePair(typeof(TSrc), typeof(TDest))) == null;
+            return Mapper.Configuration.FindMapper(new TypePair(typeof(TSrc), typeof(TDest))) != null;
         }
 
         public static T MapTo<T>(this object source)
@@ -176,7 +176,13 @@ namespace CommonLibrary
 
             if (!ConfigExist(source.GetType(), typeof(T)))
             {
-                Mapper.Initialize(cfg => cfg.CreateMap(source.GetType(), typeof(T)));
+                Mapper.Reset();
+                Action<IMapperConfigurationExpression> configurationExpress = new Action<IMapperConfigurationExpression>(cfg =>
+                {
+                    cfg.CreateMap(source.GetType(), typeof(T));
+                    cfg.CreateMap(typeof(T), source.GetType());
+                });
+                Mapper.Initialize(configurationExpress);
             }
 
             return Mapper.Map<T>(source);
@@ -188,7 +194,13 @@ namespace CommonLibrary
             {
                 if (!ConfigExist(first.GetType(), typeof(T)))
                 {
-                    Mapper.Initialize(cfg => cfg.CreateMap(first.GetType(), typeof(T)));
+                    Mapper.Reset();
+                    Action<IMapperConfigurationExpression> configurationExpress = new Action<IMapperConfigurationExpression>(cfg =>
+                    {
+                        cfg.CreateMap(first.GetType(), typeof(T));
+                        cfg.CreateMap(typeof(T), first.GetType());
+                    });
+                    Mapper.Initialize(configurationExpress);
                 }
 
                 break;
@@ -201,7 +213,13 @@ namespace CommonLibrary
         {
             if (!ConfigExist<TSource, TDest>())
             {
-                Mapper.Initialize(cfg => cfg.CreateMap<TSource, TDest>());
+                Mapper.Reset();
+                Action<IMapperConfigurationExpression> configurationExpress = new Action<IMapperConfigurationExpression>(cfg =>
+                {
+                    cfg.CreateMap<TSource, TDest>();
+                    cfg.CreateMap<TDest, TSource>();
+                });
+                Mapper.Initialize(configurationExpress);
             }
 
             return Mapper.Map<IList<TDest>>(source);
@@ -218,7 +236,13 @@ namespace CommonLibrary
 
             if (!ConfigExist<TSource, TDest>())
             {
-                Mapper.Initialize(cfg => cfg.CreateMap<TSource, TDest>());
+                Mapper.Reset();
+                Action<IMapperConfigurationExpression> configurationExpress = new Action<IMapperConfigurationExpression>(cfg =>
+                {
+                    cfg.CreateMap<TSource, TDest>();
+                    cfg.CreateMap<TDest, TSource>();
+                });
+                Mapper.Initialize(configurationExpress);
             }
             return Mapper.Map<TDest>(source);
         }
