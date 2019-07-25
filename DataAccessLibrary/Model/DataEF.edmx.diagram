@@ -22,7 +22,7 @@
         <AssociationConnector Association="DataEF.ProjectProjectList" />
         <AssociationConnector Association="DataEF.DataBaseDataBaseList" />
         <AssociationConnector Association="DataEF.SolutionPlc" />
-        <EntityTypeShape EntityType="DataEF.OptionType" Width="1.5" PointX="4.375" PointY="12.625" />
+        <EntityTypeShape EntityType="DataEF.OptionType" Width="1.5" PointX="3.875" PointY="12.625" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -36,9 +36,12 @@ namespace EmguCVLibrary
         //mapper初始化
         public void IniMapper()
         {
-            Mapper.Initialize(cfg => {
+#pragma warning disable CS0618 // 类型或成员已过时
+            Mapper.Initialize(cfg =>
+            {
                 cfg.CreateMap<User, TestClass>();
             });
+#pragma warning restore CS0618 // 类型或成员已过时
         }
         //测试映射关系
         public void TestMap()

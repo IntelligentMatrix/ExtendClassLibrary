@@ -17,9 +17,9 @@ namespace DataAccessLibrary.Model
     {
         public int Id { get; set; }
         public int PlcId { get; set; }
-        public string PlceListName { get; set; }
-        public string PlceListParas { get; set; }
-        public string PlceListComponent { get; set; }
+        public string Name { get; set; }
+        public string Paras { get; set; }
+        public string Component { get; set; }
     
         public virtual Plc Plc { get; set; }
     }

@@ -78,7 +78,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="SolutionName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="Plcs">
     <Key>
@@ -87,6 +87,7 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="SolutionId" Type="int" Nullable="false" />
     <Property Name="Type" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="Projects">
     <Key>
@@ -95,6 +96,7 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="SolutionId" Type="int" Nullable="false" />
     <Property Name="Type" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="DataBases">
     <Key>
@@ -103,6 +105,7 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="SolutionId" Type="int" Nullable="false" />
     <Property Name="Type" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="PlcLists">
     <Key>
@@ -110,9 +113,9 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="PlcId" Type="int" Nullable="false" />
-    <Property Name="PlceListName" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="PlceListParas" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="PlceListComponent" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Paras" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Component" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="ProjectLists">
     <Key>
@@ -120,9 +123,9 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ProjectId" Type="int" Nullable="false" />
-    <Property Name="ProjectListName" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="ProjectListParas" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="ProjectListComponent" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Paras" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Component" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="DataBaseLists">
     <Key>
@@ -130,9 +133,9 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="DataBaseId" Type="int" Nullable="false" />
-    <Property Name="DataBaseListName" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="DataBaseListParas" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="DataBaseListComponent" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Paras" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Component" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="OptionTypes">
     <Key>
@@ -316,7 +319,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SolutionName" Type="String" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" />
           <NavigationProperty Name="Projects" Relationship="DataEF.SolutionProject" FromRole="Solution" ToRole="Project" />
           <NavigationProperty Name="DataBases" Relationship="DataEF.SolutionDataBase" FromRole="Solution" ToRole="DataBase" />
           <NavigationProperty Name="Plcs" Relationship="DataEF.SolutionPlc" FromRole="Solution" ToRole="Plc" />
@@ -330,6 +333,7 @@
           <Property Name="Type" Type="String" Nullable="false" />
           <NavigationProperty Name="PlcLists" Relationship="DataEF.PlcPlcList" FromRole="Plc" ToRole="PlcList" />
           <NavigationProperty Name="Solution" Relationship="DataEF.SolutionPlc" FromRole="Plc" ToRole="Solution" />
+          <Property Name="Name" Type="String" Nullable="false" />
         </EntityType>
         <EntityType Name="Project">
           <Key>
@@ -340,6 +344,7 @@
           <Property Name="Type" Type="String" Nullable="false" />
           <NavigationProperty Name="Solution" Relationship="DataEF.SolutionProject" FromRole="Project" ToRole="Solution" />
           <NavigationProperty Name="ProjectLists" Relationship="DataEF.ProjectProjectList" FromRole="Project" ToRole="ProjectList" />
+          <Property Name="Name" Type="String" Nullable="false" />
         </EntityType>
         <EntityType Name="DataBase">
           <Key>
@@ -350,6 +355,7 @@
           <Property Name="Type" Type="String" Nullable="false" />
           <NavigationProperty Name="Solution" Relationship="DataEF.SolutionDataBase" FromRole="DataBase" ToRole="Solution" />
           <NavigationProperty Name="DataBaseLists" Relationship="DataEF.DataBaseDataBaseList" FromRole="DataBase" ToRole="DataBaseList" />
+          <Property Name="Name" Type="String" Nullable="false" />
         </EntityType>
         <EntityType Name="PlcList">
           <Key>
@@ -357,9 +363,9 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="PlcId" Type="Int32" Nullable="false" />
-          <Property Name="PlceListName" Type="String" Nullable="false" />
-          <Property Name="PlceListParas" Type="String" Nullable="false" />
-          <Property Name="PlceListComponent" Type="String" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Paras" Type="String" Nullable="false" />
+          <Property Name="Component" Type="String" Nullable="false" />
           <NavigationProperty Name="Plc" Relationship="DataEF.PlcPlcList" FromRole="PlcList" ToRole="Plc" />
         </EntityType>
         <EntityType Name="ProjectList">
@@ -368,9 +374,9 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ProjectId" Type="Int32" Nullable="false" />
-          <Property Name="ProjectListName" Type="String" Nullable="false" />
-          <Property Name="ProjectListParas" Type="String" Nullable="false" />
-          <Property Name="ProjectListComponent" Type="String" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Paras" Type="String" Nullable="false" />
+          <Property Name="Component" Type="String" Nullable="false" />
           <NavigationProperty Name="Project" Relationship="DataEF.ProjectProjectList" FromRole="ProjectList" ToRole="Project" />
         </EntityType>
         <EntityType Name="DataBaseList">
@@ -379,9 +385,9 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="DataBaseId" Type="Int32" Nullable="false" />
-          <Property Name="DataBaseListName" Type="String" Nullable="false" />
-          <Property Name="DataBaseListParas" Type="String" Nullable="false" />
-          <Property Name="DataBaseListComponent" Type="String" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Paras" Type="String" Nullable="false" />
+          <Property Name="Component" Type="String" Nullable="false" />
           <NavigationProperty Name="DataBase" Relationship="DataEF.DataBaseDataBaseList" FromRole="DataBaseList" ToRole="DataBase" />
         </EntityType>
         <Association Name="SolutionProject">
@@ -503,7 +509,7 @@
       <EntityTypeMapping TypeName="IsTypeOf(DataEF.Solution)">
         <MappingFragment StoreEntitySet="Solutions">
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="SolutionName" ColumnName="SolutionName" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -513,6 +519,7 @@
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="SolutionId" ColumnName="SolutionId" />
           <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -522,6 +529,7 @@
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="SolutionId" ColumnName="SolutionId" />
           <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -531,6 +539,7 @@
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="SolutionId" ColumnName="SolutionId" />
           <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -539,9 +548,9 @@
         <MappingFragment StoreEntitySet="PlcLists">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="PlcId" ColumnName="PlcId" />
-          <ScalarProperty Name="PlceListName" ColumnName="PlceListName" />
-          <ScalarProperty Name="PlceListParas" ColumnName="PlceListParas" />
-          <ScalarProperty Name="PlceListComponent" ColumnName="PlceListComponent" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Paras" ColumnName="Paras" />
+          <ScalarProperty Name="Component" ColumnName="Component" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -550,9 +559,9 @@
         <MappingFragment StoreEntitySet="ProjectLists">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
-          <ScalarProperty Name="ProjectListName" ColumnName="ProjectListName" />
-          <ScalarProperty Name="ProjectListParas" ColumnName="ProjectListParas" />
-          <ScalarProperty Name="ProjectListComponent" ColumnName="ProjectListComponent" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Paras" ColumnName="Paras" />
+          <ScalarProperty Name="Component" ColumnName="Component" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -561,9 +570,9 @@
         <MappingFragment StoreEntitySet="DataBaseLists">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="DataBaseId" ColumnName="DataBaseId" />
-          <ScalarProperty Name="DataBaseListName" ColumnName="DataBaseListName" />
-          <ScalarProperty Name="DataBaseListParas" ColumnName="DataBaseListParas" />
-          <ScalarProperty Name="DataBaseListComponent" ColumnName="DataBaseListComponent" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Paras" ColumnName="Paras" />
+          <ScalarProperty Name="Component" ColumnName="Component" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

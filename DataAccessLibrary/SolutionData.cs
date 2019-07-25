@@ -16,10 +16,20 @@ namespace DataAccessLibrary
     {
         
         public string Name { get; set; }
+        public List<PlcData> Plc { get; set; }
+        public List<ProjectData> Project { get; set; }
+        public List<DataBaseData> DataBase { get; set; } 
 
-        public List<Plc> Plc { get; set; }
-        public List<Project> Project { get; set; }
-        public List<DataBase> DataBase { get; set; } 
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        public SolutionData()
+        {
+            Name = "";
+            Plc = new List<PlcData>();
+            Project = new List<ProjectData>();
+            DataBase = new List<DataBaseData>();
+        }
 
         /// <summary>
         /// 克隆方法
@@ -41,11 +51,20 @@ namespace DataAccessLibrary
     /// PLC数据
     /// </summary>
     [Serializable]
-    public class Plc : ICloneable 
+    public class PlcData : ICloneable 
     {
 
         public string Name { get; set; }
-        public List<PlcList> PlcList { get; set; } 
+        public List<PlcListData> PlcList { get; set; } 
+
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        public PlcData()
+        {
+            Name = "";
+            PlcList = new List<PlcListData>();
+        }
         /// <summary>
         /// 克隆方法
         /// </summary>
@@ -66,11 +85,21 @@ namespace DataAccessLibrary
     /// PlcList数据
     /// </summary>
     [Serializable]
-    public class PlcList : ICloneable
+    public class PlcListData : ICloneable
     {
         public string Name { get; set; }
         public string Paras { get; set; }
         public string Component { get; set; }
+
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        public PlcListData()
+        {
+            Name = "";
+            Paras = "";
+            Component = "";
+        }
         /// <summary> 
         /// 克隆方法
         /// </summary>
@@ -91,11 +120,20 @@ namespace DataAccessLibrary
     /// Project数据
     /// </summary>
     [Serializable]
-    public class Project : ICloneable
+    public class ProjectData : ICloneable
     {
-
+        public string Type { get; set; }
         public string Name { get; set; }
-        public List<ProjectList> ProjectList { get; set; }
+        public List<ProjectListData> ProjectList { get; set; }
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        public ProjectData()
+        {
+            Type = "";
+            Name = "";
+            ProjectList = new List<ProjectListData>();
+        }
         /// <summary>
         /// 克隆方法
         /// </summary>
@@ -115,11 +153,20 @@ namespace DataAccessLibrary
     /// ProjectList数据
     /// </summary>
     [Serializable]
-    public class ProjectList : ICloneable
+    public class ProjectListData : ICloneable
     {
         public string Name { get; set; }
         public string Paras { get; set; }
         public string Component { get; set; }
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        public ProjectListData()
+        {
+            Name = "";
+            Paras = "";
+            Component = "";
+        }
         /// <summary> 
         /// 克隆方法
         /// </summary>
@@ -139,11 +186,19 @@ namespace DataAccessLibrary
     /// DataBase数据
     /// </summary>
     [Serializable]
-    public class DataBase : ICloneable
+    public class DataBaseData : ICloneable
     {
 
         public string Name { get; set; }
-        public List<DataBaseList> DataBaseList { get; set; }
+        public List<DataBaseListData> DataBaseList { get; set; }
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        public DataBaseData()
+        {
+            Name = "";
+            DataBaseList = new List<DataBaseListData>();
+        }
         /// <summary>
         /// 克隆方法
         /// </summary>
@@ -163,11 +218,22 @@ namespace DataAccessLibrary
     /// DataBaseList数据
     /// </summary>
     [Serializable]
-    public class DataBaseList : ICloneable
+    public class DataBaseListData : ICloneable
     {
         public string Name { get; set; }
         public string Paras { get; set; }
         public string Component { get; set; }
+
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        public DataBaseListData()
+        {
+            Name = "";
+            Paras = "";
+            Component = "";
+        }
+
         /// <summary> 
         /// 克隆方法
         /// </summary>

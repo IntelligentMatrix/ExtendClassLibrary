@@ -8,6 +8,7 @@ namespace DataAccessLibrary.Model
 {
     public partial class DataEFEntity
     {
+
         /// <summary>
         /// 检验登陆用户
         /// </summary>
@@ -44,7 +45,76 @@ namespace DataAccessLibrary.Model
         {
             return (from c in OptionTypes select c.Type).ToList();
         }
-
+        /// <summary>
+        /// 获取Plc 名
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="listName"></param>
+        /// <returns></returns>
+        public List<Plc> GetPlc(string listName)
+        {
+            return (from c in Plcs
+                    where c.Type == listName
+                    select c)
+                    .ToList();
+        }
+        /// <summary>
+        /// 获取Project
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="listName"></param>
+        /// <returns></returns>
+        public List<Project> GetProject(string listName)
+        {
+            return (from c in Projects
+                    where c.Type == listName
+                    select c)
+                    .ToList();
+        }
+        /// <summary>
+        /// 获取DataBase
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="listName"></param>
+        /// <returns></returns>
+        public List<DataBase> GetDataBase(string listName)
+        {
+            return (from c in DataBases
+                    where c.Type == listName
+                    select c)
+                    .ToList();
+        }
         #endregion
+        /// <summary>
+        /// 更新Solution数据
+        /// </summary>
+        /// <param name="solutionData"></param>
+        public void UpdateSolutionData(SolutionData solutionData)
+        {
+            //1、更新solution数据
+            var solutionQuery = from r in Solutions where r.Name == solutionData.Name select r;
+            Solution solution = solutionQuery.FirstOrDefault();
+            if (solution == null)
+            {
+                Solutions.Add(new Model.Solution() { Name = solutionData.Name });
+                solutionQuery = from r in Solutions where r.Name == solutionData.Name select r;
+                solution = solutionQuery.FirstOrDefault();
+            }
+            //2、更新2层项内容
+
+
+        }
+        /// <summary>
+        /// 拆分solution
+        /// </summary>
+        /// <param name="solutionData"></param>
+        /// <returns></returns>
+        public Solution Solution(SolutionData solutionData)
+        {
+            return new Solution()
+            {
+                Name = solutionData.Name
+            };
+        }
     }
 }

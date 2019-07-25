@@ -17,9 +17,9 @@ namespace DataAccessLibrary.Model
     {
         public int Id { get; set; }
         public int ProjectId { get; set; }
-        public string ProjectListName { get; set; }
-        public string ProjectListParas { get; set; }
-        public string ProjectListComponent { get; set; }
+        public string Name { get; set; }
+        public string Paras { get; set; }
+        public string Component { get; set; }
     
         public virtual Project Project { get; set; }
     }

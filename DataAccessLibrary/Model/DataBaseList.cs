@@ -17,9 +17,9 @@ namespace DataAccessLibrary.Model
     {
         public int Id { get; set; }
         public int DataBaseId { get; set; }
-        public string DataBaseListName { get; set; }
-        public string DataBaseListParas { get; set; }
-        public string DataBaseListComponent { get; set; }
+        public string Name { get; set; }
+        public string Paras { get; set; }
+        public string Component { get; set; }
     
         public virtual DataBase DataBase { get; set; }
     }

@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 07/24/2019 19:59:16
--- Generated from EDMX file: D:\My_Project\ExtendClassLibrary\DataAccessLibrary\Model\DataEF.edmx
+-- Date Created: 07/25/2019 17:28:03
+-- Generated from EDMX file: D:\Extend\ExtendClassLibrary\DataAccessLibrary\Model\DataEF.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -111,7 +111,7 @@ GO
 -- Creating table 'Solutions'
 CREATE TABLE [dbo].[Solutions] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [SolutionName] nvarchar(max)  NOT NULL
+    [Name] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -119,7 +119,8 @@ GO
 CREATE TABLE [dbo].[Plcs] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [SolutionId] int  NOT NULL,
-    [Type] nvarchar(max)  NOT NULL
+    [Type] nvarchar(max)  NOT NULL,
+    [Name] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -127,7 +128,8 @@ GO
 CREATE TABLE [dbo].[Projects] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [SolutionId] int  NOT NULL,
-    [Type] nvarchar(max)  NOT NULL
+    [Type] nvarchar(max)  NOT NULL,
+    [Name] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -135,7 +137,8 @@ GO
 CREATE TABLE [dbo].[DataBases] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [SolutionId] int  NOT NULL,
-    [Type] nvarchar(max)  NOT NULL
+    [Type] nvarchar(max)  NOT NULL,
+    [Name] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -143,9 +146,9 @@ GO
 CREATE TABLE [dbo].[PlcLists] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [PlcId] int  NOT NULL,
-    [PlceListName] nvarchar(max)  NOT NULL,
-    [PlceListParas] nvarchar(max)  NOT NULL,
-    [PlceListComponent] nvarchar(max)  NOT NULL
+    [Name] nvarchar(max)  NOT NULL,
+    [Paras] nvarchar(max)  NOT NULL,
+    [Component] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -153,9 +156,9 @@ GO
 CREATE TABLE [dbo].[ProjectLists] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [ProjectId] int  NOT NULL,
-    [ProjectListName] nvarchar(max)  NOT NULL,
-    [ProjectListParas] nvarchar(max)  NOT NULL,
-    [ProjectListComponent] nvarchar(max)  NOT NULL
+    [Name] nvarchar(max)  NOT NULL,
+    [Paras] nvarchar(max)  NOT NULL,
+    [Component] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -163,9 +166,9 @@ GO
 CREATE TABLE [dbo].[DataBaseLists] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [DataBaseId] int  NOT NULL,
-    [DataBaseListName] nvarchar(max)  NOT NULL,
-    [DataBaseListParas] nvarchar(max)  NOT NULL,
-    [DataBaseListComponent] nvarchar(max)  NOT NULL
+    [Name] nvarchar(max)  NOT NULL,
+    [Paras] nvarchar(max)  NOT NULL,
+    [Component] nvarchar(max)  NOT NULL
 );
 GO
 

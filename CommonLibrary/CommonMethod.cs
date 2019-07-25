@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -107,6 +108,119 @@ namespace CommonLibrary
         public override bool GetPropertiesSupported(ITypeDescriptorContext context)
         {
             return true;
+        }
+    }
+
+    /// <summary>
+    /// 用于Combox显示绑定的枚举对象
+    /// </summary>
+    public class BindComboxEnumType<T>
+    {
+        /// <summary>
+        /// 类型的名字
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// 类型
+        /// </summary>
+        public T Type { get; set; }
+
+        private static readonly List<BindComboxEnumType<T>> bindTyps;
+
+        static BindComboxEnumType()
+        {
+            bindTyps = new List<BindComboxEnumType<T>>();
+
+            foreach (var name in Enum.GetNames(typeof(T)))
+            {
+                bindTyps.Add(new BindComboxEnumType<T>()
+                {
+                    Name = name,
+                    Type = (T)Enum.Parse(typeof(T), name)
+                });
+            }
+        }
+
+        /// <summary>
+        /// 绑定的类型数据
+        /// </summary>
+        public static List<BindComboxEnumType<T>> BindTyps
+        {
+            get { return bindTyps; }
+        }
+    }
+    
+    /// <summary>
+    /// AutoMapper 帮助类
+    /// </summary>
+    public static class AutoMapHelper
+    {
+
+        private static bool ConfigExist(Type srcType, Type destType)
+        {
+            return Mapper.Configuration.FindMapper(new TypePair(srcType, destType)) == null;
+        }
+
+        private static bool ConfigExist<TSrc, TDest>()
+        {
+            return Mapper.Configuration.FindMapper(new TypePair(typeof(TSrc), typeof(TDest))) == null;
+        }
+
+        public static T MapTo<T>(this object source)
+        {
+            if (source == null)
+            {
+                return default(T);
+            }
+
+            if (!ConfigExist(source.GetType(), typeof(T)))
+            {
+                Mapper.Initialize(cfg => cfg.CreateMap(source.GetType(), typeof(T)));
+            }
+
+            return Mapper.Map<T>(source);
+        }
+
+        public static IList<T> MapTo<T>(this IEnumerable source)
+        {
+            foreach (var first in source)
+            {
+                if (!ConfigExist(first.GetType(), typeof(T)))
+                {
+                    Mapper.Initialize(cfg => cfg.CreateMap(first.GetType(), typeof(T)));
+                }
+
+                break;
+            }
+
+            return Mapper.Map<IList<T>>(source);
+        }
+
+        public static IList<TDest> MapTo<TSource, TDest>(this IEnumerable<TSource> source)
+        {
+            if (!ConfigExist<TSource, TDest>())
+            {
+                Mapper.Initialize(cfg => cfg.CreateMap<TSource, TDest>());
+            }
+
+            return Mapper.Map<IList<TDest>>(source);
+        }
+
+        public static TDest MapTo<TSource, TDest>(this TSource source, TDest dest)
+        where TSource : class
+        where TDest : class
+        {
+            if (source == null)
+            {
+                return dest;
+            }
+
+            if (!ConfigExist<TSource, TDest>())
+            {
+                Mapper.Initialize(cfg => cfg.CreateMap<TSource, TDest>());
+            }
+            return Mapper.Map<TDest>(source);
         }
     }
 }
