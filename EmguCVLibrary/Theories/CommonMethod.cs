@@ -13,6 +13,7 @@ using System.Drawing;
 using Emgu.CV.Util;
 using Newtonsoft.Json;
 using CommonLibrary;
+using MyLibrary;
 
 namespace EmguCVLibrary.Theories
 {

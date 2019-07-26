@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.Configuration;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CommonLibrary
+namespace MyLibrary 
 {
     /// <summary>
     /// PointFConverter 的摘要说明。
@@ -156,75 +157,140 @@ namespace CommonLibrary
     /// </summary>
     public static class AutoMapHelper
     {
-
+        /// <summary>
+        /// 判断静态Mapper是都存在映射
+        /// </summary>
+        /// <param name="srcType"></param>
+        /// <param name="destType"></param>
+        /// <returns></returns>
         private static bool ConfigExist(Type srcType, Type destType)
         {
             return Mapper.Configuration.FindMapper(new TypePair(srcType, destType)) != null;
         }
-
+        /// <summary>
+        /// 判断静态Mapper是都存在映射
+        /// </summary>
+        /// <typeparam name="TSrc"></typeparam>
+        /// <typeparam name="TDest"></typeparam>
+        /// <returns></returns>
         private static bool ConfigExist<TSrc, TDest>()
         {
             return Mapper.Configuration.FindMapper(new TypePair(typeof(TSrc), typeof(TDest))) != null;
         }
-
+        /// <summary>
+        /// 映射
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source"></param>
+        /// <returns></returns>
         public static T MapTo<T>(this object source)
         {
             if (source == null)
-            {
                 return default(T);
-            }
 
-            if (!ConfigExist(source.GetType(), typeof(T)))
-            {
-                Mapper.Reset();
-                Action<IMapperConfigurationExpression> configurationExpress = new Action<IMapperConfigurationExpression>(cfg =>
-                {
-                    cfg.CreateMap(source.GetType(), typeof(T));
-                    cfg.CreateMap(typeof(T), source.GetType());
-                });
-                Mapper.Initialize(configurationExpress);
-            }
+            var cfg = new MapperConfigurationExpression();
 
-            return Mapper.Map<T>(source);
+            //配置表达式
+
+            //cfg.RecognizeDestinationPrefixes("Set");        //识别目标地点前缀，还有其他识别配置
+
+            cfg.CreateMap(source.GetType(), typeof(T));
+
+            cfg.CreateMap(typeof(T), source.GetType());
+
+            var config = new MapperConfiguration(cfg);
+
+            var mapper = config.CreateMapper();             //生成一个map
+
+            return mapper.Map<T>(source);
         }
+        /// <summary>
+        /// List映射
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source"></param>
+        /// <returns></returns>
 
         public static IList<T> MapTo<T>(this IEnumerable source)
         {
+            var cfg = new MapperConfigurationExpression();
             foreach (var first in source)
             {
-                if (!ConfigExist(first.GetType(), typeof(T)))
-                {
-                    Mapper.Reset();
-                    Action<IMapperConfigurationExpression> configurationExpress = new Action<IMapperConfigurationExpression>(cfg =>
-                    {
-                        cfg.CreateMap(first.GetType(), typeof(T));
-                        cfg.CreateMap(typeof(T), first.GetType());
-                    });
-                    Mapper.Initialize(configurationExpress);
-                }
+                //cfg.RecognizeDestinationPrefixes("Set");   //识别目标地点前缀，还有其他识别配置
+
+                cfg.CreateMap(first.GetType(), typeof(T));
+
+                cfg.CreateMap(typeof(T), first.GetType());
 
                 break;
             }
-
-            return Mapper.Map<IList<T>>(source);
+            var config = new MapperConfiguration(cfg);       //生成配置文件
+            var mapper = config.CreateMapper();             //生成一个map
+            return mapper.Map<IList<T>>(source);
         }
-
+        /// <summary>
+        /// List映射
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <typeparam name="TDest"></typeparam>
+        /// <param name="source"></param>
+        /// <returns></returns>
         public static IList<TDest> MapTo<TSource, TDest>(this IEnumerable<TSource> source)
         {
-            if (!ConfigExist<TSource, TDest>())
-            {
-                Mapper.Reset();
-                Action<IMapperConfigurationExpression> configurationExpress = new Action<IMapperConfigurationExpression>(cfg =>
-                {
-                    cfg.CreateMap<TSource, TDest>();
-                    cfg.CreateMap<TDest, TSource>();
-                });
-                Mapper.Initialize(configurationExpress);
-            }
+            var cfg = new MapperConfigurationExpression();
 
-            return Mapper.Map<IList<TDest>>(source);
+            //配置表达式
+
+            //cfg.RecognizeDestinationPrefixes("Set");        //识别目标地点前缀，还有其他识别配置
+
+            cfg.CreateMap<TSource, TDest>();         //以上都是配置表达式
+
+            cfg.CreateMap<TDest, TSource>();         //以上都是配置表达式
+
+            var config = new MapperConfiguration(cfg);
+
+            var mapper = config.CreateMapper();             //生成一个map
+
+            return mapper.Map<IList<TDest>>(source);
+
+           
         }
+        /// <summary>
+        /// 映射形式1
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <typeparam name="TDestination"></typeparam>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static TDestination MapTo<TSource, TDestination>(this TSource source) where TDestination : class where TSource : class
+        {
+            if (source == null)
+                return default(TDestination);
 
+            var cfg = new MapperConfigurationExpression();
+
+            //配置表达式
+
+            //cfg.RecognizeDestinationPrefixes("Set");        //识别目标地点前缀，还有其他识别配置
+
+            cfg.CreateMap<TSource, TDestination>();         //以上都是配置表达式
+
+            cfg.CreateMap<TDestination, TSource>();         //以上都是配置表达式
+
+            var config = new MapperConfiguration(cfg);
+
+            var mapper = config.CreateMapper();             //生成一个map
+
+            return mapper.Map<TDestination>(source);
+        }
+        /// <summary>
+        /// 映射形式2
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <typeparam name="TDest"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="dest"></param>
+        /// <returns></returns>
         public static TDest MapTo<TSource, TDest>(this TSource source, TDest dest)
         where TSource : class
         where TDest : class
@@ -234,17 +300,21 @@ namespace CommonLibrary
                 return dest;
             }
 
-            if (!ConfigExist<TSource, TDest>())
-            {
-                Mapper.Reset();
-                Action<IMapperConfigurationExpression> configurationExpress = new Action<IMapperConfigurationExpression>(cfg =>
-                {
-                    cfg.CreateMap<TSource, TDest>();
-                    cfg.CreateMap<TDest, TSource>();
-                });
-                Mapper.Initialize(configurationExpress);
-            }
-            return Mapper.Map<TDest>(source);
+            var cfg = new MapperConfigurationExpression();
+
+            //配置表达式
+
+            //cfg.RecognizeDestinationPrefixes("Set");        //识别目标地点前缀，还有其他识别配置
+
+            cfg.CreateMap<TSource, TDest>();         //以上都是配置表达式
+
+            cfg.CreateMap<TDest, TSource>();         //以上都是配置表达式
+
+            var config = new MapperConfiguration(cfg);
+
+            var mapper = config.CreateMapper();             //生成一个map
+
+            return mapper.Map<TDest>(source);
         }
     }
 }

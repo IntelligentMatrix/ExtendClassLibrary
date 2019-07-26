@@ -54,6 +54,7 @@ namespace DataAccessLibrary
     public class PlcData : ICloneable 
     {
 
+        public string Type { get; set; }
         public string Name { get; set; }
         public List<PlcListData> PlcList { get; set; } 
 
@@ -62,6 +63,7 @@ namespace DataAccessLibrary
         /// </summary>
         public PlcData()
         {
+            Type = "";
             Name = "";
             PlcList = new List<PlcListData>();
         }
@@ -188,7 +190,7 @@ namespace DataAccessLibrary
     [Serializable]
     public class DataBaseData : ICloneable
     {
-
+        public string Type { get; set; }
         public string Name { get; set; }
         public List<DataBaseListData> DataBaseList { get; set; }
         /// <summary>
@@ -196,6 +198,7 @@ namespace DataAccessLibrary
         /// </summary>
         public DataBaseData()
         {
+            Type = "";
             Name = "";
             DataBaseList = new List<DataBaseListData>();
         }

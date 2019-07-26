@@ -29,9 +29,10 @@
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE;NET451</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <WarningLevel>3</WarningLevel>
     <DocumentationFile>bin\Release\HslCommunication.xml</DocumentationFile>
     <PlatformTarget>x86</PlatformTarget>
+    <NoWarn>1591,0414,1572</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
     <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>

@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using DataAccessLibrary;
-using DataAccessLibrary.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,6 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MyLibrary;
+using DataAccessLibrary.Model;
+using DataAccessLibrary;
 
 namespace CommonLibrary.FormAndUser
 {
@@ -40,7 +41,7 @@ namespace CommonLibrary.FormAndUser
         /// <param name="e"></param>
         private void ConfigForm_Load(object sender, EventArgs e)
         {
-            Mapper.Initialize(cfg => { });
+
             //初始化Solution名称
             textBox_OptionName.Text = SolutionName;
 
@@ -52,7 +53,7 @@ namespace CommonLibrary.FormAndUser
             //}
 
             //分组初始化 
-            comboBox_Option.DataSource = BindComboxEnumType<OptionType>.BindTyps;
+            comboBox_Option.DataSource = MyLibrary.BindComboxEnumType<OptionType>.BindTyps;
             comboBox_Option.DisplayMember = "Name";
             comboBox_Option.ValueMember = "Type";
 
@@ -81,51 +82,86 @@ namespace CommonLibrary.FormAndUser
         /// <param name="e"></param>
         private void Button_AddOption_Click(object sender, EventArgs e)
         {
-            
-            ProjectListData projectList01 = new ProjectListData()
-            {
-                Name = "Test",
-                Paras = "Para",
-                Component = "NewComponent"
-            };
-            ProjectData project = new ProjectData()
-            {
-                Type = "project",
-                Name = "Test",
-            };
             SolutionData solution = new SolutionData()
             {
-                Name = "Test4"
+                Name = "Solution"
             };
+            for (int i = 0;i < 10 ;i++)//外层
+            {
+                solution.Plc.Add(new PlcData()
+                {
+                    Type = $"PlcType{i + 20}",
+                    Name = $"PlcName{i}"
+                });
+                solution.Project.Add(new ProjectData()
+                {
+                    Type = $"ProjectType{i + 20}",
+                    Name = $"ProjectName{i}"
+                });
+                solution.DataBase.Add(new DataBaseData()
+                {
+                    Type = $"DataBaseType{i + 20}",
+                    Name = $"DataBaseName{i}"
+                });
+
+                for (int j = 0; j < 10; j++)//内层
+                {
+                    solution.Plc[i].PlcList.Add(new PlcListData()
+                    {
+                        Name = $"PlcListName{j}",
+                        Paras = $"PlcListParas{j + 10}",
+                        Component = $"PlcListComponent{j + 20}"
+                    });
+                    solution.DataBase[i].DataBaseList.Add(new DataBaseListData()
+                    {
+                        Name = $"DataBaseListName{j}",
+                        Paras = $"DataBaseListParas{j + 10}",
+                        Component = $"DataBaseListComponent{j + 20}"
+                    });
+                    solution.Project[i].ProjectList.Add(new ProjectListData()
+                    {
+                        Name = $"ProjectListName{j}",
+                        Paras = $"ProjectListParas{j + 10}",
+                        Component = $"ProjectListComponent{j + 20}"
+                    });
+                }
+            }
+            //更新
+            DB.UpdateSolutionData(solution);
+            
+            
+            
+            
+            
             //Mapper.Initialize(cfg => { cfg.CreateMap<SolutionData, Solution>(); });
             
             //Solution
-            var Solution = (from c in DB.Solutions where c.Name == solution.Name select c).FirstOrDefault();
-            if (Solution == null)//如果为空，则创建Solution
-            {
-                Solution solution1 = AutoMapHelper.MapTo<Solution>(solution);
-                DB.Solutions.Add(solution1);//追加Solution
-                DB.SaveChangesAsync();
-                return;
-            }
-            //Project
-            var Proiquery = from r in Solution.Projects where r.Type == project.Type && r.Name == project.Name select r;
-            Project project1 = Proiquery.FirstOrDefault();
-            if (project1 == null)
-            {
-                Solution.Projects.Add(AutoMapHelper.MapTo<Project>(project));
-                DB.SaveChangesAsync();
-                return;
-            }
-            //projectList
-            var ProListiquery = from r in project1.ProjectLists where r.Name == projectList01.Name select r;
-            ProjectList projectList1 = ProListiquery.FirstOrDefault();
-            if (projectList1 == null)
-            {
-                project1.ProjectLists.Add(AutoMapHelper.MapTo<ProjectList>(projectList01));
-                DB.SaveChangesAsync();
-                return;
-            }
+            //var Solution = (from c in DB.Solutions where c.Name == solution.Name select c).FirstOrDefault();
+            //if (Solution == null)//如果为空，则创建Solution
+            //{
+            //    Solution solution1 = AutoMapHelper.MapTo<SolutionData,Solution>(solution);
+            //    DB.Solutions.Add(solution1);//追加Solution
+            //    DB.SaveChangesAsync();
+            //    return;
+            //}
+            ////Project
+            //var Proiquery = from r in Solution.Projects where r.Type == project.Type && r.Name == project.Name select r;
+            //Project project1 = Proiquery.FirstOrDefault();
+            //if (project1 == null)
+            //{
+            //    Solution.Projects.Add(AutoMapHelper.MapTo<Project>(project));
+            //    DB.SaveChangesAsync();
+            //    return;
+            //}
+            ////projectList
+            //var ProListiquery = from r in project1.ProjectLists where r.Name == projectList01.Name select r;
+            //ProjectList projectList1 = ProListiquery.FirstOrDefault();
+            //if (projectList1 == null)
+            //{
+            //    project1.ProjectLists.Add(AutoMapHelper.MapTo<ProjectList>(projectList01));
+            //    DB.SaveChangesAsync();
+            //    return;
+            //}
         }
         /// <summary>
         /// 删除选项
