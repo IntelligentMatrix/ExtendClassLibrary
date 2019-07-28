@@ -94,7 +94,7 @@ namespace PresentForm
 
         private void Button5_Click(object sender, EventArgs e)
         {
-            ConfigForm Test = new ConfigForm();
+            AddForm Test = new AddForm();
             Test.ShowDialog();
         }
     }

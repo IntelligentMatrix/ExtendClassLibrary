@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using DataAccessLibrary.Model;
 using MyLibrary;
@@ -100,6 +101,7 @@ namespace DataAccessLibrary.Model
             {
                 Solutions.Add(AutoMapHelper.MapTo<Solution>(solutionData));
                 this.SaveChanges();
+                Thread.Sleep(20);
                 solutionQuery = from r in Solutions where r.Name == solutionData.Name select r;
                 solution = solutionQuery.FirstOrDefault();
             }
@@ -143,6 +145,10 @@ namespace DataAccessLibrary.Model
                     {
                         //追加父级
                         solution.Plcs.Add(AutoMapHelper.MapTo<Plc>(o));
+                        this.SaveChanges();
+                        Thread.Sleep(20);
+                        plcQuery = from r in solution.Plcs where r.Name == o.Name select r;
+                        plc = plcQuery.FirstOrDefault();
                         //添加子集
                         if (o.PlcList.Count > 0)
                         {
@@ -205,6 +211,10 @@ namespace DataAccessLibrary.Model
                     {
                         //追加父级
                         solution.Projects.Add(AutoMapHelper.MapTo<Project>(o));
+                        this.SaveChanges();
+                        Thread.Sleep(20);
+                        projectQuery = from r in solution.Projects where r.Name == o.Name select r;
+                        project = projectQuery.FirstOrDefault();
                         //添加子集
                         if (o.ProjectList.Count > 0)
                         {
@@ -268,6 +278,10 @@ namespace DataAccessLibrary.Model
                     {
                         //追加父级
                         solution.DataBases.Add(AutoMapHelper.MapTo<DataBase>(o));
+                        this.SaveChanges();
+                        Thread.Sleep(20);
+                        dataBaseQuery = from r in solution.DataBases where r.Name == o.Name select r;
+                        dataBase = dataBaseQuery.FirstOrDefault();
                         //添加子集
                         if (o.DataBaseList.Count > 0)
                         {
