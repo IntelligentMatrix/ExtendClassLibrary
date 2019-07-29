@@ -12,6 +12,7 @@ using MyLibrary;
 using DataAccessLibrary.Model;
 using DataAccessLibrary;
 using CommonLibrary.Define;
+using Newtonsoft.Json;
 
 namespace CommonLibrary.FormAndUser
 {
@@ -86,56 +87,56 @@ namespace CommonLibrary.FormAndUser
         /// <param name="e"></param>
         private void Button_AddOption_Click(object sender, EventArgs e)
         {
-            Type type = Type.GetType("EmguCVLibrary.Theories.CommonMethod");
+            //Type type = Type.GetType("EmguCVLibrary.Theories.CommonMethod");
 
-            Type type1 = Type.GetType("CommonLibrary.FormAndUser.AddForm");
+            //Type type1 = Type.GetType("CommonLibrary.FormAndUser.AddForm");
 
-            //SolutionData solution = new SolutionData()
-            //{
-            //    Name = SolutionName
-            //};
-            //for (int i = 0;i < 10 ;i++)//外层
-            //{
-            //    solution.Plc.Add(new PlcData()
-            //    {
-            //        Type = $"PlcType{i + 20}",
-            //        Name = $"PlcName{i}"
-            //    });
-            //    solution.Project.Add(new ProjectData()
-            //    {
-            //        Type = $"ProjectType{i + 20}",
-            //        Name = $"ProjectName{i}"
-            //    });
-            //    solution.DataBase.Add(new DataBaseData()
-            //    {
-            //        Type = $"DataBaseType{i + 20}",
-            //        Name = $"DataBaseName{i}"
-            //    });
+            SolutionData solution = new SolutionData()
+            {
+                Name = SolutionName
+            };
+            for (int i = 0; i < 10; i++)//外层
+            {
+                solution.Plc.Add(new PlcData()
+                {
+                    Type = $"PlcType{i + 20}",
+                    Name = $"PlcName{i}"
+                });
+                solution.Project.Add(new ProjectData()
+                {
+                    Type = $"ProjectType{i + 20}",
+                    Name = $"ProjectName{i}"
+                });
+                solution.DataBase.Add(new DataBaseData()
+                {
+                    Type = $"DataBaseType{i + 20}",
+                    Name = $"DataBaseName{i}"
+                });
 
-            //    for (int j = 0; j < 10; j++)//内层
-            //    {
-            //        solution.Plc[i].PlcList.Add(new PlcListData()
-            //        {
-            //            Name = $"PlcListName{j}",
-            //            Paras = $"PlcListParas{j + 10}",
-            //            Component = $"PlcListComponent{j + 20}"
-            //        });
-            //        solution.DataBase[i].DataBaseList.Add(new DataBaseListData()
-            //        {
-            //            Name = $"DataBaseListName{j}",
-            //            Paras = $"DataBaseListParas{j + 10}",
-            //            Component = $"DataBaseListComponent{j + 20}"
-            //        });
-            //        solution.Project[i].ProjectList.Add(new ProjectListData()
-            //        {
-            //            Name = $"ProjectListName{j}",
-            //            Paras = $"ProjectListParas{j + 10}",
-            //            Component = $"ProjectListComponent{j + 20}"
-            //        });
-            //    }
-            //}
-            ////更新
-            //DB.UpdateSolutionData(solution);
+                for (int j = 0; j < 10; j++)//内层
+                {
+                    solution.Plc[i].PlcList.Add(new PlcListData()
+                    {
+                        Name = $"PlcListName{j}",
+                        Paras = $"PlcListParas{j + 10}",
+                        Component = $"PlcListComponent{j + 20}"
+                    });
+                    solution.DataBase[i].DataBaseList.Add(new DataBaseListData()
+                    {
+                        Name = $"DataBaseListName{j}",
+                        Paras = $"DataBaseListParas{j + 10}",
+                        Component = $"DataBaseListComponent{j + 20}"
+                    });
+                    solution.Project[i].ProjectList.Add(new ProjectListData()
+                    {
+                        Name = $"ProjectListName{j}",
+                        Paras = $"ProjectListParas{j + 10}",
+                        Component = $"ProjectListComponent{j + 20}"
+                    });
+                }
+            }
+            //更新
+            DB.UpdateSolutionData(solution);
 
             //Mapper.Initialize(cfg => { cfg.CreateMap<SolutionData, Solution>(); });
 
@@ -251,13 +252,70 @@ namespace CommonLibrary.FormAndUser
                 return;
             }
         }
+        bool Sperate = false;//false - database，true - component
         /// <summary>
-        /// 刷新组件参数
+        /// 刷新组件参数,用于数据库中
         /// </summary>
-        private void RefreshComponentPara()
+        /// <param name="item"></param>
+        private void RefreshComponentPara_ByDByData(ListViewItem item)
         {
-
+            string component = item.SubItems[0].Text;
+            //检索分类
+            if (Enum.TryParse<OptionType>(comboBox_Option.Text, out OptionType result))
+            {
+                switch (result)
+                {
+                    case OptionType.Plc:
+                        if (PlcComponentDefine.ComponmentParamDictionary.ContainsKey(component))
+                        {
+                            Type type = PlcComponentDefine.ComponmentParamDictionary[component].ParamType;
+                            object paramObj = PlcComponentDefine.CreatInstance(type);
+                            if (!Sperate) paramObj = JsonConvert.DeserializeObject((string)item.Tag,paramObj.GetType());
+                            propertyGrid_Para.SelectedObject = paramObj;
+                        }
+                        else
+                        {
+                            throw new Exception(string.Format("The component doesn't exist：{0}.", component));
+                        }
+                        break;
+                    case OptionType.Project:
+                        if (ProjectComponentDefine.ComponmentParamDictionary.ContainsKey(component))
+                        {
+                            Type type = ProjectComponentDefine.ComponmentParamDictionary[component].ParamType;
+                            object paramObj = ProjectComponentDefine.CreatInstance(type);
+                            if (!Sperate) paramObj = JsonConvert.DeserializeObject((string)item.Tag, paramObj.GetType());
+                            propertyGrid_Para.SelectedObject = paramObj;
+                        }
+                        else
+                        {
+                            throw new Exception(string.Format("The component doesn't exist：{0}.", component));
+                        }
+                        break;
+                    case OptionType.DataBase:
+                        if (DataBaseComponentDefine.ComponmentParamDictionary.ContainsKey(component))
+                        {
+                            Type type = DataBaseComponentDefine.ComponmentParamDictionary[component].ParamType;
+                            object paramObj = DataBaseComponentDefine.CreatInstance(type);
+                            if (!Sperate) paramObj = JsonConvert.DeserializeObject((string)item.Tag, paramObj.GetType());
+                            propertyGrid_Para.SelectedObject = paramObj;
+                        }
+                        else
+                        {
+                            throw new Exception(string.Format("The component doesn't exist：{0}.", component));
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                Sperate = false;
+            }
+            else
+            {
+                Sperate = false;
+                return;
+            }
         }
+        
 
         /// <summary>
         /// 刷新组件列表
@@ -271,7 +329,6 @@ namespace CommonLibrary.FormAndUser
             {
                 ListViewItem.ListViewSubItem[] subItems;
                 ListViewItem item = null;
-                string[] tmp = null;
                 switch (result)
                 {
                     case OptionType.Plc:
@@ -279,7 +336,7 @@ namespace CommonLibrary.FormAndUser
                         foreach (var o in PlcComponentDefine.ComponmentParamDictionary)
                         {
                             item = new ListViewItem(o.Key, 0);
-                            item.Tag = o.Key;
+                            item.Tag = PlcComponentDefine.CreatInstance(o.Value.ParamType);
                             subItems = new ListViewItem.ListViewSubItem[]{
                                 new ListViewItem.ListViewSubItem(item, o.Value.ComponentType.Name)};
                             item.SubItems.AddRange(subItems);
@@ -293,7 +350,7 @@ namespace CommonLibrary.FormAndUser
                         foreach (var o in ProjectComponentDefine.ComponmentParamDictionary)
                         {
                             item = new ListViewItem(o.Key, 0);
-                            item.Tag = o.Key;
+                            item.Tag = ProjectComponentDefine.CreatInstance(o.Value.ParamType);
                             subItems = new ListViewItem.ListViewSubItem[]{
                                 new ListViewItem.ListViewSubItem(item, o.Value.ComponentType.Name)};
                             item.SubItems.AddRange(subItems);
@@ -307,7 +364,7 @@ namespace CommonLibrary.FormAndUser
                         foreach (var o in DataBaseComponentDefine.ComponmentParamDictionary)
                         {
                             item = new ListViewItem(o.Key, 0);
-                            item.Tag = o.Key;
+                            item.Tag = DataBaseComponentDefine.CreatInstance(o.Value.ParamType);
                             subItems = new ListViewItem.ListViewSubItem[]{
                                 new ListViewItem.ListViewSubItem(item, o.Value.ComponentType.Name)};
                             item.SubItems.AddRange(subItems);
@@ -351,7 +408,7 @@ namespace CommonLibrary.FormAndUser
                         foreach (var o in sqlsortPlc)
                         {
                             item = new ListViewItem(o.Id.ToString(), 0);
-                            item.Tag = o.Name;
+                            item.Tag = o.Paras;
                             subItems = new ListViewItem.ListViewSubItem[]{
                                 new ListViewItem.ListViewSubItem(item, o.Name)};
                             item.SubItems.AddRange(subItems);
@@ -367,7 +424,7 @@ namespace CommonLibrary.FormAndUser
                         foreach (var o in sqlsortProject)
                         {
                             item = new ListViewItem(o.Id.ToString(), 0);
-                            item.Tag = o.Name;
+                            item.Tag = o.Paras;
                             subItems = new ListViewItem.ListViewSubItem[]{
                                 new ListViewItem.ListViewSubItem(item, o.Name)};
                             item.SubItems.AddRange(subItems);
@@ -383,7 +440,7 @@ namespace CommonLibrary.FormAndUser
                         foreach (var o in sqlsortDataBase)
                         {
                             item = new ListViewItem(o.Id.ToString(), 0);
-                            item.Tag = o.Name;
+                            item.Tag = o.Paras;
                             subItems = new ListViewItem.ListViewSubItem[]{
                                 new ListViewItem.ListViewSubItem(item, o.Name)};
                             item.SubItems.AddRange(subItems);
@@ -408,6 +465,30 @@ namespace CommonLibrary.FormAndUser
         private void InitialComponentListView()
         {
 
+        }
+        
+        /// <summary>
+        /// 组件列表选中修改事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ListView_ComponentList_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            Sperate = true;
+            try
+            {
+
+                if (e.IsSelected)
+                {
+                    ListViewItem item = e.Item;
+                    RefreshComponentPara_ByDByData(item);
+                    //CurListViewItem = e.Item;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
     }
 }

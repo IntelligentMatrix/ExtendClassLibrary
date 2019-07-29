@@ -13,7 +13,9 @@ namespace CommonLibrary.Define
     /// </summary>
     public static class ProjectComponentDefine
     {
+
         static string path = Application.StartupPath + @"\EmguCVLibrary.dll";//引用地址
+        static Assembly asm = Assembly.LoadFile(path);//加载DLL库
         private static Dictionary<string, ComponentParam> componmentParamDictionary;
         public static Dictionary<string, ComponentParam> ComponmentParamDictionary
         {
@@ -25,7 +27,6 @@ namespace CommonLibrary.Define
         static ProjectComponentDefine()
         {
             
-            Assembly asm = Assembly.LoadFile(path);//加载DLL库
             componmentParamDictionary = new Dictionary<string, ComponentParam>();//初始化
             //
             /**
@@ -46,6 +47,16 @@ namespace CommonLibrary.Define
                 ComponentType = asm.GetType("EmguCVLibrary.Theories.OCR_Recognition"),
                 ParamType = asm.GetType("EmguCVLibrary.Theories.OCR_Recognition_Para")
             });
+        }
+        /// <summary>
+        /// 创建实例
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static object CreatInstance(Type type)
+        {
+            //return System.Activator.CreateInstance(type);
+            return asm.CreateInstance(type.FullName);
         }
     }
 }

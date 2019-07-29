@@ -92,7 +92,7 @@ namespace DataAccessLibrary.Model
         /// 添加/更新Solution数据
         /// </summary>
         /// <param name="solutionData"></param>
-        public void UpdateSolutionData(SolutionData solutionData)
+        public async void UpdateSolutionData(SolutionData solutionData)
         {
             //1、更新solution数据
             var solutionQuery = from r in Solutions where r.Name == solutionData.Name select r;
@@ -100,8 +100,9 @@ namespace DataAccessLibrary.Model
             if (solution == null)
             {
                 Solutions.Add(AutoMapHelper.MapTo<Solution>(solutionData));
-                this.SaveChangesAsync();
-                Thread.Sleep(30);
+                await Task.Run(() => {
+                    this.SaveChangesAsync();
+                }); 
                 solutionQuery = from r in Solutions where r.Name == solutionData.Name select r;
                 solution = solutionQuery.FirstOrDefault();
             }
@@ -146,8 +147,9 @@ namespace DataAccessLibrary.Model
                     {
                         //追加父级
                         solution.Plcs.Add(AutoMapHelper.MapTo<Plc>(o));
-                        this.SaveChangesAsync();
-                        Thread.Sleep(20);
+                        await Task.Run(() => {
+                            this.SaveChangesAsync();
+                        });
                         plcQuery = from r in solution.Plcs where r.Name == o.Name select r;
                         plc = plcQuery.FirstOrDefault();
                         //添加子集
@@ -212,7 +214,9 @@ namespace DataAccessLibrary.Model
                     {
                         //追加父级
                         solution.Projects.Add(AutoMapHelper.MapTo<Project>(o));
-                        this.SaveChangesAsync();
+                        await Task.Run(() => {
+                            this.SaveChangesAsync();
+                        });
                         Thread.Sleep(20);
                         projectQuery = from r in solution.Projects where r.Name == o.Name select r;
                         project = projectQuery.FirstOrDefault();
@@ -279,7 +283,9 @@ namespace DataAccessLibrary.Model
                     {
                         //追加父级
                         solution.DataBases.Add(AutoMapHelper.MapTo<DataBase>(o));
-                        this.SaveChangesAsync();
+                        await Task.Run(() => {
+                            this.SaveChangesAsync();
+                        });
                         Thread.Sleep(20);
                         dataBaseQuery = from r in solution.DataBases where r.Name == o.Name select r;
                         dataBase = dataBaseQuery.FirstOrDefault();
@@ -308,7 +314,10 @@ namespace DataAccessLibrary.Model
                 }
             }
             //3、保存修改到数据库
-            this.SaveChangesAsync();
+            var t = Task.Run(() => {
+                this.SaveChangesAsync();
+            });
+            await t;
         }
         /// <summary>
         /// 拆分solution
