@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using MyLibrary;
 using DataAccessLibrary.Model;
 using DataAccessLibrary;
+using CommonLibrary.Define;
 
 namespace CommonLibrary.FormAndUser
 {
@@ -43,7 +44,7 @@ namespace CommonLibrary.FormAndUser
         {
 
             //初始化Solution名称
-            textBox_OptionName.Text = SolutionName;
+            textBox_Solution.Text = SolutionName;
 
             //检测Solution是否存在
             //var Solution = from c in DB.Solutions where c.SolutionName == SolutionName select c;
@@ -71,9 +72,12 @@ namespace CommonLibrary.FormAndUser
         private void ComboBox_Option_SelectedIndexChanged(object sender, EventArgs e)
         {
             string Option_Text = comboBox_Option.Text;
-            //检索当前项目该选项的内容
-            comboBox_OptionList.Items.AddRange(DB.GetPlc(Option_Text).Select(o => o.Name).ToList().ToArray());
-
+            //该类型组件列表刷新
+            //listView_ComponentList.Items.Clear();
+            //listView_ComponentList.Items.AddRange(DB.GetPlc(Option_Text).Select(o => o.Name).ToList().ToArray());
+            RefreshOptionInfo();
+            InitialOptionComponentListView();
+            RefreshComponent();
         }
         /// <summary>
         /// 增加选项
@@ -82,59 +86,59 @@ namespace CommonLibrary.FormAndUser
         /// <param name="e"></param>
         private void Button_AddOption_Click(object sender, EventArgs e)
         {
-            SolutionData solution = new SolutionData()
-            {
-                Name = "Solution"
-            };
-            for (int i = 0;i < 10 ;i++)//外层
-            {
-                solution.Plc.Add(new PlcData()
-                {
-                    Type = $"PlcType{i + 20}",
-                    Name = $"PlcName{i}"
-                });
-                solution.Project.Add(new ProjectData()
-                {
-                    Type = $"ProjectType{i + 20}",
-                    Name = $"ProjectName{i}"
-                });
-                solution.DataBase.Add(new DataBaseData()
-                {
-                    Type = $"DataBaseType{i + 20}",
-                    Name = $"DataBaseName{i}"
-                });
+            Type type = Type.GetType("EmguCVLibrary.Theories.CommonMethod");
 
-                for (int j = 0; j < 10; j++)//内层
-                {
-                    solution.Plc[i].PlcList.Add(new PlcListData()
-                    {
-                        Name = $"PlcListName{j}",
-                        Paras = $"PlcListParas{j + 10}",
-                        Component = $"PlcListComponent{j + 20}"
-                    });
-                    solution.DataBase[i].DataBaseList.Add(new DataBaseListData()
-                    {
-                        Name = $"DataBaseListName{j}",
-                        Paras = $"DataBaseListParas{j + 10}",
-                        Component = $"DataBaseListComponent{j + 20}"
-                    });
-                    solution.Project[i].ProjectList.Add(new ProjectListData()
-                    {
-                        Name = $"ProjectListName{j}",
-                        Paras = $"ProjectListParas{j + 10}",
-                        Component = $"ProjectListComponent{j + 20}"
-                    });
-                }
-            }
-            //更新
-            DB.UpdateSolutionData(solution);
-            
-            
-            
-            
-            
+            Type type1 = Type.GetType("CommonLibrary.FormAndUser.AddForm");
+
+            //SolutionData solution = new SolutionData()
+            //{
+            //    Name = SolutionName
+            //};
+            //for (int i = 0;i < 10 ;i++)//外层
+            //{
+            //    solution.Plc.Add(new PlcData()
+            //    {
+            //        Type = $"PlcType{i + 20}",
+            //        Name = $"PlcName{i}"
+            //    });
+            //    solution.Project.Add(new ProjectData()
+            //    {
+            //        Type = $"ProjectType{i + 20}",
+            //        Name = $"ProjectName{i}"
+            //    });
+            //    solution.DataBase.Add(new DataBaseData()
+            //    {
+            //        Type = $"DataBaseType{i + 20}",
+            //        Name = $"DataBaseName{i}"
+            //    });
+
+            //    for (int j = 0; j < 10; j++)//内层
+            //    {
+            //        solution.Plc[i].PlcList.Add(new PlcListData()
+            //        {
+            //            Name = $"PlcListName{j}",
+            //            Paras = $"PlcListParas{j + 10}",
+            //            Component = $"PlcListComponent{j + 20}"
+            //        });
+            //        solution.DataBase[i].DataBaseList.Add(new DataBaseListData()
+            //        {
+            //            Name = $"DataBaseListName{j}",
+            //            Paras = $"DataBaseListParas{j + 10}",
+            //            Component = $"DataBaseListComponent{j + 20}"
+            //        });
+            //        solution.Project[i].ProjectList.Add(new ProjectListData()
+            //        {
+            //            Name = $"ProjectListName{j}",
+            //            Paras = $"ProjectListParas{j + 10}",
+            //            Component = $"ProjectListComponent{j + 20}"
+            //        });
+            //    }
+            //}
+            ////更新
+            //DB.UpdateSolutionData(solution);
+
             //Mapper.Initialize(cfg => { cfg.CreateMap<SolutionData, Solution>(); });
-            
+
             //Solution
             //var Solution = (from c in DB.Solutions where c.Name == solution.Name select c).FirstOrDefault();
             //if (Solution == null)//如果为空，则创建Solution
@@ -214,6 +218,196 @@ namespace CommonLibrary.FormAndUser
                 return;
             }
         }
+        
+        /// <summary>
+        /// 刷新option信息
+        /// </summary>
+        private void RefreshOptionInfo()
+        {
+            comboBox_OptionList.Items.Clear();
+            //检索分类
+            if (Enum.TryParse<OptionType>(comboBox_Option.Text, out OptionType result))
+            {
+                switch (result)
+                {
+                    case OptionType.Plc:
+                        comboBox_OptionList.Items.AddRange((from r in DB.Plcs where r.Solution.Name == SolutionName select r).Select(o => o.Name).ToArray());
+                        if (comboBox_OptionList.Items.Count > 0) comboBox_OptionList.SelectedIndex = 0;
+                        break;
+                    case OptionType.Project:
+                        comboBox_OptionList.Items.AddRange((from r in DB.Projects where r.Solution.Name == SolutionName select r).Select(o => o.Name).ToArray());
+                        if (comboBox_OptionList.Items.Count > 0) comboBox_OptionList.SelectedIndex = 0;
+                        break;
+                    case OptionType.DataBase:
+                        comboBox_OptionList.Items.AddRange((from r in DB.DataBases where r.Solution.Name == SolutionName select r).Select(o => o.Name).ToArray());
+                        if (comboBox_OptionList.Items.Count > 0) comboBox_OptionList.SelectedIndex = 0;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                return;
+            }
+        }
+        /// <summary>
+        /// 刷新组件参数
+        /// </summary>
+        private void RefreshComponentPara()
+        {
 
+        }
+
+        /// <summary>
+        /// 刷新组件列表
+        /// </summary>
+        private void RefreshComponent()
+        {
+            //检索列表
+            listView_ComponentList.Items.Clear();
+            //检索分类
+            if (Enum.TryParse<OptionType>(comboBox_Option.Text, out OptionType result))
+            {
+                ListViewItem.ListViewSubItem[] subItems;
+                ListViewItem item = null;
+                string[] tmp = null;
+                switch (result)
+                {
+                    case OptionType.Plc:
+                        //tmp = PlcComponentDefine.ComponmentParamDictionary.Keys.ToArray();
+                        foreach (var o in PlcComponentDefine.ComponmentParamDictionary)
+                        {
+                            item = new ListViewItem(o.Key, 0);
+                            item.Tag = o.Key;
+                            subItems = new ListViewItem.ListViewSubItem[]{
+                                new ListViewItem.ListViewSubItem(item, o.Value.ComponentType.Name)};
+                            item.SubItems.AddRange(subItems);
+                            subItems = new ListViewItem.ListViewSubItem[]{
+                                new ListViewItem.ListViewSubItem(item, o.Value.ParamType.Name)};
+                            item.SubItems.AddRange(subItems);
+                            listView_ComponentList.Items.Add(item);
+                        }
+                        break;
+                    case OptionType.Project:
+                        foreach (var o in ProjectComponentDefine.ComponmentParamDictionary)
+                        {
+                            item = new ListViewItem(o.Key, 0);
+                            item.Tag = o.Key;
+                            subItems = new ListViewItem.ListViewSubItem[]{
+                                new ListViewItem.ListViewSubItem(item, o.Value.ComponentType.Name)};
+                            item.SubItems.AddRange(subItems);
+                            subItems = new ListViewItem.ListViewSubItem[]{
+                                new ListViewItem.ListViewSubItem(item, o.Value.ParamType.Name)};
+                            item.SubItems.AddRange(subItems);
+                            listView_ComponentList.Items.Add(item);
+                        }
+                        break;
+                    case OptionType.DataBase:
+                        foreach (var o in DataBaseComponentDefine.ComponmentParamDictionary)
+                        {
+                            item = new ListViewItem(o.Key, 0);
+                            item.Tag = o.Key;
+                            subItems = new ListViewItem.ListViewSubItem[]{
+                                new ListViewItem.ListViewSubItem(item, o.Value.ComponentType.Name)};
+                            item.SubItems.AddRange(subItems);
+                            subItems = new ListViewItem.ListViewSubItem[]{
+                                new ListViewItem.ListViewSubItem(item, o.Value.ParamType.Name)};
+                            item.SubItems.AddRange(subItems);
+                            listView_ComponentList.Items.Add(item);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        /// <summary>
+        /// 刷新选项组件列表
+        /// </summary>
+        private void InitialOptionComponentListView()
+        {
+            if (string.IsNullOrEmpty(comboBox_OptionList.Text)) return;
+            //提取检索ID
+            int sortID = 0; 
+
+            //检索列表
+            listView_OptionComponent.Items.Clear();
+            //检索分类
+            if(Enum.TryParse<OptionType>(comboBox_Option.Text, out OptionType result))
+            {
+                ListViewItem.ListViewSubItem[] subItems;
+                ListViewItem item = null;
+                switch (result)
+                {
+                    case OptionType.Plc:
+                        sortID = (from r in DB.Plcs where r.Solution.Name == SolutionName && r.Name == comboBox_OptionList.Text select r).FirstOrDefault().Id;
+                        var sqlsortPlc = from r in DB.PlcLists where r.PlcId == sortID select r;
+                        foreach (var o in sqlsortPlc)
+                        {
+                            item = new ListViewItem(o.Id.ToString(), 0);
+                            item.Tag = o.Name;
+                            subItems = new ListViewItem.ListViewSubItem[]{
+                                new ListViewItem.ListViewSubItem(item, o.Name)};
+                            item.SubItems.AddRange(subItems);
+                            subItems = new ListViewItem.ListViewSubItem[]{
+                                new ListViewItem.ListViewSubItem(item, o.Component)};
+                            item.SubItems.AddRange(subItems);
+                            listView_OptionComponent.Items.Add(item);
+                        }
+                        break;
+                    case OptionType.Project:
+                        sortID = (from r in DB.Projects where r.Solution.Name == SolutionName && r.Name == comboBox_OptionList.Text select r).FirstOrDefault().Id;
+                        var sqlsortProject = from r in DB.ProjectLists where r.ProjectId == sortID select r;
+                        foreach (var o in sqlsortProject)
+                        {
+                            item = new ListViewItem(o.Id.ToString(), 0);
+                            item.Tag = o.Name;
+                            subItems = new ListViewItem.ListViewSubItem[]{
+                                new ListViewItem.ListViewSubItem(item, o.Name)};
+                            item.SubItems.AddRange(subItems);
+                            subItems = new ListViewItem.ListViewSubItem[]{
+                                new ListViewItem.ListViewSubItem(item, o.Component)};
+                            item.SubItems.AddRange(subItems);
+                            listView_OptionComponent.Items.Add(item);
+                        }
+                        break;
+                    case OptionType.DataBase:
+                        sortID = (from r in DB.DataBases where r.Solution.Name == SolutionName && r.Name == comboBox_OptionList.Text select r).FirstOrDefault().Id;
+                        var sqlsortDataBase = from r in DB.DataBaseLists where r.DataBaseId == sortID select r;
+                        foreach (var o in sqlsortDataBase)
+                        {
+                            item = new ListViewItem(o.Id.ToString(), 0);
+                            item.Tag = o.Name;
+                            subItems = new ListViewItem.ListViewSubItem[]{
+                                new ListViewItem.ListViewSubItem(item, o.Name)};
+                            item.SubItems.AddRange(subItems);
+                            subItems = new ListViewItem.ListViewSubItem[]{
+                                new ListViewItem.ListViewSubItem(item, o.Component)};
+                            item.SubItems.AddRange(subItems);
+                            listView_OptionComponent.Items.Add(item);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                return;
+            }
+        }
+        /// <summary>
+        /// 刷新组件列表
+        /// </summary>
+        private void InitialComponentListView()
+        {
+
+        }
     }
 }

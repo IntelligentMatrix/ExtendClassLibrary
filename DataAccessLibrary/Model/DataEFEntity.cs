@@ -100,8 +100,8 @@ namespace DataAccessLibrary.Model
             if (solution == null)
             {
                 Solutions.Add(AutoMapHelper.MapTo<Solution>(solutionData));
-                this.SaveChanges();
-                Thread.Sleep(20);
+                this.SaveChangesAsync();
+                Thread.Sleep(30);
                 solutionQuery = from r in Solutions where r.Name == solutionData.Name select r;
                 solution = solutionQuery.FirstOrDefault();
             }
@@ -119,6 +119,7 @@ namespace DataAccessLibrary.Model
                         //更新数据
                         plc.Type = o.Type;
                         plc.Name = o.Name;
+
                         //更新3层数据
                         if (o.PlcList.Count > 0)
                         {
@@ -145,7 +146,7 @@ namespace DataAccessLibrary.Model
                     {
                         //追加父级
                         solution.Plcs.Add(AutoMapHelper.MapTo<Plc>(o));
-                        this.SaveChanges();
+                        this.SaveChangesAsync();
                         Thread.Sleep(20);
                         plcQuery = from r in solution.Plcs where r.Name == o.Name select r;
                         plc = plcQuery.FirstOrDefault();
@@ -211,7 +212,7 @@ namespace DataAccessLibrary.Model
                     {
                         //追加父级
                         solution.Projects.Add(AutoMapHelper.MapTo<Project>(o));
-                        this.SaveChanges();
+                        this.SaveChangesAsync();
                         Thread.Sleep(20);
                         projectQuery = from r in solution.Projects where r.Name == o.Name select r;
                         project = projectQuery.FirstOrDefault();
@@ -278,7 +279,7 @@ namespace DataAccessLibrary.Model
                     {
                         //追加父级
                         solution.DataBases.Add(AutoMapHelper.MapTo<DataBase>(o));
-                        this.SaveChanges();
+                        this.SaveChangesAsync();
                         Thread.Sleep(20);
                         dataBaseQuery = from r in solution.DataBases where r.Name == o.Name select r;
                         dataBase = dataBaseQuery.FirstOrDefault();

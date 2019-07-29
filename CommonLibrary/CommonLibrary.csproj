@@ -66,6 +66,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Define\ComponentParam.cs" />
+    <Compile Include="Define\DataBaseComponentDefine.cs" />
+    <Compile Include="Define\PlcComponentDefine.cs" />
+    <Compile Include="Define\ProjectComponentDefine.cs" />
     <Compile Include="FormAndUser\AddForm.cs">
       <SubType>Form</SubType>
     </Compile>
