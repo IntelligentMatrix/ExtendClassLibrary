@@ -62,8 +62,9 @@ namespace EmguCVLibrary.Theories
         /// <summary>
         /// 处理图像
         /// </summary>
-        public override void ProcessImge(ref ImgDataStruct ImgData) 
-        {
+        public override void ProcessImge<ImgDataStruct>(ref ImgDataStruct ImgData)
+        { 
+            ImgData = new T();
             ImgData.DstImage = new Mat();//初始化DstImage
             Mat TmpImage = new Mat();//初始化TmpImage
             Mat[] channels = ImgData.SrcImage.Split();
@@ -162,6 +163,18 @@ namespace EmguCVLibrary.Theories
         DisplayName("ThresholdType"),
         TypeConverterAttribute(typeof(PointFConverter))]
         public PointF Pos { get; set; }
+
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        public CommonMethod_Para()
+        {
+            DstImageType = OutPutType.All;
+            ColorConversion = ColorConversion.Bgra2Gray;
+            Threshold = 100;
+            ThresholdMaxValue = 255;
+            ThresholdType = ThresholdType.BinaryInv;
+        }
 
     }
     /// <summary>

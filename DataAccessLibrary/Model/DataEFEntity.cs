@@ -25,6 +25,7 @@ namespace DataAccessLibrary.Model
                  select u).Count() == 1
                        );
         }
+
         /// <summary>
         /// 判断用户是否Admin
         /// </summary>
@@ -88,6 +89,26 @@ namespace DataAccessLibrary.Model
                     .ToList();
         }
         #endregion
+        /// <summary>
+        /// 增加Solution
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public void AddSolution(string name)
+        {
+            var solutionQuery = from r in Solutions where r.Name == name select r;
+            Solution solution = solutionQuery.FirstOrDefault();
+            if (solution == null)
+            {
+                Solutions.Add(new Solution()
+                {
+                    Name = name
+                });
+                this.SaveChanges();
+                Thread.Sleep(60);
+            }
+        }
+
         /// <summary>
         /// 添加/更新Solution数据
         /// </summary>

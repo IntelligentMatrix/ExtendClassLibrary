@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseMethod.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="BaseMethod.Designer.cs">
+      <DependentUpon>BaseMethod.cs</DependentUpon>
+    </Compile>
     <Compile Include="CommonMethod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

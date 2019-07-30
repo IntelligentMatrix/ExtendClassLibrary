@@ -83,12 +83,6 @@
     <Compile Include="MyException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestClass.cs" />
-    <Compile Include="Theories\BaseMethod.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Theories\BaseMethod.Designer.cs">
-      <DependentUpon>BaseMethod.cs</DependentUpon>
-    </Compile>
     <Compile Include="Theories\CommonMethod.cs">
       <SubType>Component</SubType>
     </Compile>

@@ -1,4 +1,4 @@
-﻿namespace EmguCVLibrary.Theories
+﻿namespace MyLibrary
 {
     partial class BaseMethod
     {

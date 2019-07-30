@@ -5,17 +5,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Emgu.CV;
-using Emgu.CV.Structure;
-using Emgu.CV.CvEnum;
-using Emgu.Util;
 using System.Drawing;
-using Emgu.CV.Util;
 using System.IO;
-using CommonLibrary;
-using MyLibrary;
 
-namespace EmguCVLibrary.Theories
+namespace MyLibrary
 {
     public partial class BaseMethod : Component
     {
@@ -28,13 +21,12 @@ namespace EmguCVLibrary.Theories
         public BaseMethod(IContainer container)
         {
             container.Add(this);
-
             InitializeComponent();
         }
         #endregion
 
         #region 公有字段
-        protected string ComponentName;//组件名
+        public string ComponentName;//组件名
         public string Params;//参数字符串   
         #endregion
 
@@ -48,7 +40,8 @@ namespace EmguCVLibrary.Theories
         /// <summary>
         /// 处理图像
         /// </summary>
-        public virtual void ProcessImge(ref ImgDataStruct ImgData) { }
+        public virtual void ProcessImge<T>(ref T ImgData) where T:new() { } 
+
         #endregion
 
         #region 私有函数

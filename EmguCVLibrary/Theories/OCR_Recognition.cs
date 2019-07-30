@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Emgu.CV.OCR;
+using System.Windows.Forms;
+using MyLibrary;
 
 namespace EmguCVLibrary.Theories
 {
@@ -161,6 +163,18 @@ namespace EmguCVLibrary.Theories
          CategoryAttribute("Setting"),
          DisplayName("EnforceLocale")]
         public bool EnforceLocale { get; set; } = false;
+
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        public OCR_Recognition_Para()
+        {
+            DataPath = Application.StartupPath + @"\OcrData\";
+            Language = LanguageType.英文;
+            EngineMode = OcrEngineMode.Default;
+            WhiteList = null;
+            EnforceLocale = false;
+        }
     }
     /// <summary>
     /// 语言类型
