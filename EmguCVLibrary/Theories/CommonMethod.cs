@@ -12,12 +12,12 @@ using Emgu.CV.CvEnum;
 using System.Drawing;
 using Emgu.CV.Util;
 using Newtonsoft.Json;
-using CommonLibrary;
 using MyLibrary;
+using EmguCVLibrary;
 
 namespace EmguCVLibrary.Theories
 {
-    public partial class CommonMethod : BaseMethod
+    public partial class CommonMethod : ProjectBaseMethod
     {
         #region 构造函数
         public CommonMethod()
@@ -62,9 +62,8 @@ namespace EmguCVLibrary.Theories
         /// <summary>
         /// 处理图像
         /// </summary>
-        public override void ProcessImge<ImgDataStruct>(ref ImgDataStruct ImgData)
+        public override void ProcessImge(ref ImgDataStruct ImgData) 
         { 
-            ImgData = new T();
             ImgData.DstImage = new Mat();//初始化DstImage
             Mat TmpImage = new Mat();//初始化TmpImage
             Mat[] channels = ImgData.SrcImage.Split();

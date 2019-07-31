@@ -1,6 +1,6 @@
-﻿namespace MyLibrary
+﻿namespace EmguCVLibrary.Theories
 {
-    partial class BaseMethod
+    partial class ProjectBaseMethod
     {
         /// <summary>
         /// 必需的设计器变量。

@@ -9,10 +9,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MyLibrary;
-using DataAccessLibrary.Model;
 using DataAccessLibrary;
 using CommonLibrary.Define;
 using Newtonsoft.Json;
+using CommonLibrary.CommonMethod;
+using DataAccessLibrary.Model;
 
 namespace CommonLibrary.FormAndUser
 {

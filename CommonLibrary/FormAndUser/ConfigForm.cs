@@ -11,7 +11,7 @@ using System.Windows.Forms;
 using MyLibrary;
 using DataAccessLibrary.Model;
 using DataAccessLibrary;
-
+using CommonLibrary.CommonMethod;
 namespace CommonLibrary.FormAndUser
 {
     public partial class ConfigForm : Form
@@ -53,7 +53,7 @@ namespace CommonLibrary.FormAndUser
             //}
 
             //分组初始化 
-            comboBox_Option.DataSource = MyLibrary.BindComboxEnumType<OptionType>.BindTyps;
+            comboBox_Option.DataSource = BindComboxEnumType<OptionType>.BindTyps;
             comboBox_Option.DisplayMember = "Name";
             comboBox_Option.ValueMember = "Type";
 
@@ -214,12 +214,6 @@ namespace CommonLibrary.FormAndUser
                 return;
             }
         }
-
     }
-    public enum OptionType
-    {
-        Plc = 0,
-        Project =2,
-        DataBase = 4
-    }
+   
 }

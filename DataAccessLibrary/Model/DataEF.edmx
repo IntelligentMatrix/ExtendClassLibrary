@@ -16,7 +16,6 @@
     <EntitySet Name="PlcLists" EntityType="DataEF.Store.PlcLists" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectLists" EntityType="DataEF.Store.ProjectLists" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="DataBaseLists" EntityType="DataEF.Store.DataBaseLists" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="OptionTypes" EntityType="DataEF.Store.OptionTypes" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="CentralConfigHostContext" Association="DataEF.Store.CentralConfigHostContext">
       <End Role="CentralConfig" EntitySet="CentralConfigSet" />
       <End Role="HostContext" EntitySet="HostContextSet" />
@@ -136,13 +135,6 @@
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Paras" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Component" Type="nvarchar(max)" Nullable="false" />
-  </EntityType>
-  <EntityType Name="OptionTypes">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Type" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <Association Name="CentralConfigHostContext">
     <End Role="CentralConfig" Type="DataEF.Store.CentralConfigSet" Multiplicity="1" />
@@ -271,7 +263,6 @@
             <End Role="Solution" EntitySet="Solutions" />
             <End Role="Plc" EntitySet="Plcs" />
           </AssociationSet>
-          <EntitySet Name="OptionTypes" EntityType="DataEF.OptionType" />
         </EntityContainer>
         <EntityType Name="CentralConfig">
           <Key>
@@ -462,13 +453,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="OptionType">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Type" Type="String" Nullable="false" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -573,14 +557,6 @@
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Paras" ColumnName="Paras" />
           <ScalarProperty Name="Component" ColumnName="Component" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="OptionTypes">
-      <EntityTypeMapping TypeName="IsTypeOf(DataEF.OptionType)">
-        <MappingFragment StoreEntitySet="OptionTypes">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Type" ColumnName="Type" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

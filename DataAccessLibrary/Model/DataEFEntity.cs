@@ -41,14 +41,7 @@ namespace DataAccessLibrary.Model
         }
 
         #region 封装常用功能
-        /// <summary>
-        /// 获取选项类型
-        /// </summary>
-        /// <returns></returns>
-        public List<string> GetOptionType()
-        {
-            return (from c in OptionTypes select c.Type).ToList();
-        }
+        
         /// <summary>
         /// 获取Plc 名
         /// </summary>

@@ -15,7 +15,7 @@ namespace EmguCVLibrary.Theories
     /// <summary>
     /// OCR光学字符识别
     /// </summary>
-    public partial class OCR_Recognition : BaseMethod
+    public partial class OCR_Recognition : ProjectBaseMethod
     {
         #region 构造函数
         public OCR_Recognition()

@@ -116,9 +116,6 @@
     <Compile Include="Model\HostContext.cs">
       <DependentUpon>DataEF.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\OptionType.cs">
-      <DependentUpon>DataEF.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\Plc.cs">
       <DependentUpon>DataEF.tt</DependentUpon>
     </Compile>

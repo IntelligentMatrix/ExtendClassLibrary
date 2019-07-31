@@ -7,18 +7,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.IO;
+using MyLibrary;
 
-namespace MyLibrary
+namespace EmguCVLibrary.Theories
 {
-    public partial class BaseMethod : Component
+    public partial class ProjectBaseMethod : Component
     {
         #region
-        public BaseMethod()
+        public ProjectBaseMethod()
         {
             InitializeComponent();
         }
 
-        public BaseMethod(IContainer container)
+        public ProjectBaseMethod(IContainer container)
         {
             container.Add(this);
             InitializeComponent();
@@ -31,7 +32,7 @@ namespace MyLibrary
         #endregion
 
 
-        #region Virtual接口函数
+        #region Virtual函数
         /// <summary>
         /// 初始化参数变量
         /// </summary>
@@ -40,12 +41,29 @@ namespace MyLibrary
         /// <summary>
         /// 处理图像
         /// </summary>
-        public virtual void ProcessImge<T>(ref T ImgData) where T:new() { } 
+        public virtual void ProcessImge(ref ImgDataStruct ImgData){ } 
 
         #endregion
 
         #region 私有函数
-        
+        /// <summary>
+        /// 组件初始化
+        /// </summary>
+        /// <param name="componentName"></param>
+        /// <param name="paras"></param>
+        public void IniComponent(string componentName,string paras)
+        {
+            this.ComponentName = componentName;
+            this.Params = paras;
+            try
+            {
+                InitialParameter();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
         #endregion
     }
 

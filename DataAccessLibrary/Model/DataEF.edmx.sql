@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 07/30/2019 09:53:12
+-- Date Created: 07/31/2019 11:19:37
 -- Generated from EDMX file: D:\Extend\ExtendClassLibrary\DataAccessLibrary\Model\DataEF.edmx
 -- --------------------------------------------------
 
@@ -72,9 +72,6 @@ IF OBJECT_ID(N'[dbo].[ProjectLists]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[DataBaseLists]', 'U') IS NOT NULL
     DROP TABLE [dbo].[DataBaseLists];
-GO
-IF OBJECT_ID(N'[dbo].[OptionTypes]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[OptionTypes];
 GO
 
 -- --------------------------------------------------
@@ -172,13 +169,6 @@ CREATE TABLE [dbo].[DataBaseLists] (
 );
 GO
 
--- Creating table 'OptionTypes'
-CREATE TABLE [dbo].[OptionTypes] (
-    [Id] int IDENTITY(1,1) NOT NULL,
-    [Type] nvarchar(max)  NOT NULL
-);
-GO
-
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -240,12 +230,6 @@ GO
 -- Creating primary key on [Id] in table 'DataBaseLists'
 ALTER TABLE [dbo].[DataBaseLists]
 ADD CONSTRAINT [PK_DataBaseLists]
-    PRIMARY KEY CLUSTERED ([Id] ASC);
-GO
-
--- Creating primary key on [Id] in table 'OptionTypes'
-ALTER TABLE [dbo].[OptionTypes]
-ADD CONSTRAINT [PK_OptionTypes]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 

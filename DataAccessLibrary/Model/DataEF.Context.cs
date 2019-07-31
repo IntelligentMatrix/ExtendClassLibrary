@@ -35,6 +35,5 @@ namespace DataAccessLibrary.Model
         public virtual DbSet<PlcList> PlcLists { get; set; }
         public virtual DbSet<ProjectList> ProjectLists { get; set; }
         public virtual DbSet<DataBaseList> DataBaseLists { get; set; }
-        public virtual DbSet<OptionType> OptionTypes { get; set; }
     }
 }
