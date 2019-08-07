@@ -16,6 +16,11 @@ namespace EmguCVLibrary
         public Mat SrcImage { get; set; }
 
         /// <summary>
+        /// 临时图像数据
+        /// </summary>
+        public Mat TmpImage { get; set; }
+
+        /// <summary>
         /// 模板图像数据
         /// </summary>
         public Mat TplImage { get; set; }

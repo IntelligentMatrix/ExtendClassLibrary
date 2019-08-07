@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CommonLibrary.Define
@@ -26,12 +23,12 @@ namespace CommonLibrary.Define
         static DataBaseComponentDefine()
         {
             componmentParamDictionary = new Dictionary<string, ComponentParam>();//初始化
-            //
-            /**
-             * 
-             * 
-             * **/
-            
+                                                                                 //
+                                                                                 /**
+                                                                                  * 
+                                                                                  * 
+                                                                                  * **/
+
         }
         /// <summary>
         /// 创建实例

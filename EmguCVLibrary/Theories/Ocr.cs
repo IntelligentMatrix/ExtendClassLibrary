@@ -15,15 +15,15 @@ namespace EmguCVLibrary.Theories
     /// <summary>
     /// OCR光学字符识别
     /// </summary>
-    public partial class OCR_Recognition : ProjectBaseMethod
+    public partial class Ocr : ProjectBaseMethod
     {
         #region 构造函数
-        public OCR_Recognition()
+        public Ocr()
         {
             InitializeComponent();
         }
 
-        public OCR_Recognition(IContainer container)
+        public Ocr(IContainer container)
         {
             container.Add(this);
 
@@ -62,8 +62,6 @@ namespace EmguCVLibrary.Theories
                 {
                     return LanguageType.英文;
                 }
-
-                
             }
             set
             {
@@ -95,14 +93,17 @@ namespace EmguCVLibrary.Theories
         /// </summary>
         public override void InitialParameter()
         {
-            OCR_Recognition_Para Para = new OCR_Recognition_Para();
-            Para = JsonConvert.DeserializeObject<OCR_Recognition_Para>(Params);//将字符串转换为参数变量
+            Ocr_Para Para = new Ocr_Para();
+            Para = JsonConvert.DeserializeObject<Ocr_Para>(Params);//将字符串转换为参数变量
             //变量赋值
             DataPath = Para.DataPath;
             LanguageType = Para.Language;
             EngineMode = Para.EngineMode;
             WhiteList = Para.WhiteList;
             EnforceLocale = Para.EnforceLocale;
+
+            //初始引擎
+            IniOcr();
         }
         #endregion
 
@@ -112,9 +113,7 @@ namespace EmguCVLibrary.Theories
         /// </summary>
         public void IniOcr()
         {
-            Tesseract_OCR = new Tesseract(DataPath, Language, EngineMode, WhiteList, EnforceLocale);//初始化引擎参数
-            //Tesseract_OCR = new Tesseract();
-            //Tesseract_OCR.Init(DataPath, Language, EngineMode);
+            Tesseract_OCR = new Tesseract(DataPath, Language, EngineMode, WhiteList, EnforceLocale);//初始化引擎参数           
         }
         /// <summary>
         /// 识别字符
@@ -123,12 +122,34 @@ namespace EmguCVLibrary.Theories
         /// <returns></returns>
         public string GetOCR(ref ImgDataStruct ImgData)
         {
-            IniOcr();
             string Result = "";
             Tesseract_OCR.SetImage(ImgData.DstImage);//设置识别图片
             Tesseract_OCR.Recognize();//识别
-            Result = Tesseract_OCR.GetUTF8Text();          
+            Result = Tesseract_OCR.GetUTF8Text();
+            MessageBox.Show(Result);
             return Result; 
+        }
+        /// <summary>
+        /// 识别字符
+        /// </summary>
+        /// <param name="ImgData"></param>
+        /// <returns></returns>
+        public string GetTplOCR(ref ImgDataStruct ImgData) 
+        {
+            string Result = "";
+            if (ImgData.TplImage.IsEmpty) return null;
+            Tesseract_OCR.SetImage(ImgData.TplImage);//设置识别图片
+            Tesseract_OCR.Recognize();//识别
+            Result = Tesseract_OCR.GetUTF8Text();
+            MessageBox.Show(Result);
+            return Result;
+        }
+        /// <summary>
+        /// 处理图像
+        /// </summary>
+        public override void ProcessImge(ref ImgDataStruct ImgData)
+        {
+            GetTplOCR(ref ImgData);
         }
         #endregion
 
@@ -137,7 +158,7 @@ namespace EmguCVLibrary.Theories
     /// <summary>
     /// OCR光学字符识别 参数
     /// </summary>
-    public class OCR_Recognition_Para
+    public class Ocr_Para
     { 
         [DescriptionAttribute("语言包路劲"),
          CategoryAttribute("Setting"),
@@ -167,7 +188,7 @@ namespace EmguCVLibrary.Theories
         /// <summary>
         /// 构造函数
         /// </summary>
-        public OCR_Recognition_Para()
+        public Ocr_Para()
         {
             DataPath = Application.StartupPath + @"\OcrData\";
             Language = LanguageType.英文;

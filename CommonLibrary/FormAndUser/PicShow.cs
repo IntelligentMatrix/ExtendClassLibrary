@@ -1,19 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Drawing.Imaging;
 
 namespace CommonLibrary
 {
     public partial class PicShow : UserControl
     {
-        
+
         public PicShow()
         {
             InitializeComponent();
@@ -60,11 +53,11 @@ namespace CommonLibrary
         private void PicShow_Load(object sender, EventArgs e)
         {
             Bitmap tmp = GetScreen();
-            
+
             //缩放
             //PicProgressMethod.PicProgress(tmp, out m_bmp, GetRatio(tmp));
             //if (m_bmp == null) return;
-            
+
             //原始
             m_bmp = tmp;
             this.DoubleBuffered = true;
@@ -75,7 +68,7 @@ namespace CommonLibrary
         /// </summary>
         /// <param name="originPos"></param>
         /// <param name="ratio"></param>
-        public void FocusPic(Point originPos,float ratio)
+        public void FocusPic(Point originPos, float ratio)
         {
             m_ptCanvas = originPos;//聚焦坐标
             m_nScale = ratio;//缩放系数
@@ -112,14 +105,14 @@ namespace CommonLibrary
                     //    g.DrawLine(Pens.Cyan, 0, y, PictureBox.Width, y);
                     //for (float y = m_ptCanvas.Y; y < PictureBox.Width; y += nIncrement)
                     //    g.DrawLine(Pens.Cyan, 0, y, PictureBox.Width, y);
-                    
+
                     //计算屏幕左上角 和 右下角 对应画布上的坐标
                     Size szTemp = PicBox.Size - (Size)m_ptCanvas;
                     PointF ptCanvasOnShowRectLT = new PointF(
                         -m_ptCanvas.X / m_nScale, -m_ptCanvas.Y / m_nScale);
                     PointF ptCanvasOnShowRectRB = new PointF(
                         szTemp.Width / m_nScale, szTemp.Height / m_nScale);
-                    
+
                     //显示文字信息
                     string strDraw = "Scale: " + m_nScale.ToString("F1") +
                         "\nOrigin: " + m_ptCanvas.ToString() +
@@ -128,7 +121,7 @@ namespace CommonLibrary
                         "\n" + ((Size)Point.Round(ptCanvasOnShowRectRB)
                         - (Size)Point.Round(ptCanvasOnShowRectLT)).ToString();
                     Size strSize = TextRenderer.MeasureText(strDraw, this.Font);
-                    
+
                     //绘制文字信息
                     SolidBrush sb = new SolidBrush(Color.FromArgb(125, 0, 0, 0));
                     g.FillRectangle(sb, 0, 0, strSize.Width, strSize.Height);
@@ -248,7 +241,7 @@ namespace CommonLibrary
         /// <summary>
         /// 依据控件图像大小，计算缩放比例，使图像铺满绘图框
         /// </summary>
-        public float GetRatio(Bitmap pic) 
+        public float GetRatio(Bitmap pic)
         {
             if (pic == null) return 0;
             if ((Width < pic.Width) || (Height < pic.Height))

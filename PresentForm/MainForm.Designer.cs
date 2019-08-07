@@ -38,8 +38,8 @@
             this.propertyGrid2 = new System.Windows.Forms.PropertyGrid();
             this.picShow2 = new CommonLibrary.PicShow();
             this.picShow1 = new CommonLibrary.PicShow();
-            this.commonMethod1 = new EmguCVLibrary.Theories.CommonMethod(this.components);
-            this.ocR_Recognition1 = new EmguCVLibrary.Theories.OCR_Recognition(this.components);
+            this.commonMethod1 = new EmguCVLibrary.Theories.Initialization(this.components);
+            this.ocR_Recognition1 = new EmguCVLibrary.Theories.Ocr(this.components);
             this.button5 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -181,12 +181,12 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
-        private EmguCVLibrary.Theories.CommonMethod commonMethod1;
+        private EmguCVLibrary.Theories.Initialization commonMethod1;
         private System.Windows.Forms.PropertyGrid propertyGrid1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.PropertyGrid propertyGrid2;
-        private EmguCVLibrary.Theories.OCR_Recognition ocR_Recognition1;
+        private EmguCVLibrary.Theories.Ocr ocR_Recognition1;
         private System.Windows.Forms.Button button5;
     }
 }

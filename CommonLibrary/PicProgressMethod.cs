@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CommonLibrary
 {
@@ -17,7 +13,7 @@ namespace CommonLibrary
         /// <param name="dstPic"></param>
         /// <param name="ratio"></param>
         /// <returns></returns>
-        public static void PicProgress(Bitmap srcPic,out Bitmap dstPic,float ratio)
+        public static void PicProgress(Bitmap srcPic, out Bitmap dstPic, float ratio)
         {
             //异常直接返回
             if ((srcPic == null) || (ratio <= 0))

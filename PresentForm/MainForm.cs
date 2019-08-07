@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using CommonLibrary.FormAndUser;
+﻿using CommonLibrary.FormAndUser;
 using EmguCVLibrary;
 using Newtonsoft.Json;
+using System;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace PresentForm
 {
@@ -26,7 +20,7 @@ namespace PresentForm
 
         }
         //定义图像处理参数
-        EmguCVLibrary.Theories.CommonMethod_Para para = new EmguCVLibrary.Theories.CommonMethod_Para()
+        EmguCVLibrary.Theories.Initialization_Para para = new EmguCVLibrary.Theories.Initialization_Para()
         {
             ColorConversion = Emgu.CV.CvEnum.ColorConversion.Bgra2Gray,
             Threshold = 100,
@@ -34,7 +28,7 @@ namespace PresentForm
             ThresholdType = Emgu.CV.CvEnum.ThresholdType.BinaryInv
         };
         //定义OCR识别参数
-        EmguCVLibrary.Theories.OCR_Recognition_Para Ocr_Para = new EmguCVLibrary.Theories.OCR_Recognition_Para()
+        EmguCVLibrary.Theories.Ocr_Para Ocr_Para = new EmguCVLibrary.Theories.Ocr_Para()
         {
             DataPath = Application.StartupPath + @"\OcrData\",
             Language = EmguCVLibrary.Theories.LanguageType.英文,
@@ -46,7 +40,7 @@ namespace PresentForm
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            picShow1.FocusPic(new Point(-2948,-566),2.5f);
+            picShow1.FocusPic(new Point(-2948, -566), 2.5f);
         }
 
         private void Button2_Click(object sender, EventArgs e)
@@ -60,7 +54,7 @@ namespace PresentForm
             };
             if (openfile.ShowDialog() == DialogResult.OK)
             {
-                 filepath = openfile.FileName;
+                filepath = openfile.FileName;
             }
             else
             {
@@ -79,7 +73,7 @@ namespace PresentForm
             //处理图像
             commonMethod1.ProcessImge(ref Imgdata);
             picShow2.LoadPic(new Bitmap(Imgdata.DstImage.Bitmap));
-            
+
         }
 
         private void Button4_Click(object sender, EventArgs e)
@@ -94,7 +88,7 @@ namespace PresentForm
 
         private void Button5_Click(object sender, EventArgs e)
         {
-            AddForm Test = new AddForm();
+            ConfigForm Test = new ConfigForm();
             Test.ShowDialog();
         }
     }

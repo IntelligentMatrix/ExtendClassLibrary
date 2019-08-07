@@ -80,23 +80,53 @@
     <Compile Include="MyException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestClass.cs" />
+    <Compile Include="Theories\Dilate.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Theories\Dilate.Designer.cs">
+      <DependentUpon>Dilate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Theories\Erode.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Theories\Erode.Designer.cs">
+      <DependentUpon>Erode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Theories\FloodFill.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Theories\FloodFill.Designer.cs">
+      <DependentUpon>FloodFill.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Theories\Morphology.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Theories\Morphology.Designer.cs">
+      <DependentUpon>Morphology.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Theories\MyCharRec.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Theories\MyCharRec.Designer.cs">
+      <DependentUpon>MyCharRec.cs</DependentUpon>
+    </Compile>
     <Compile Include="Theories\ProjectBaseMethod.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Theories\ProjectBaseMethod.Designer.cs">
       <DependentUpon>ProjectBaseMethod.cs</DependentUpon>
     </Compile>
-    <Compile Include="Theories\CommonMethod.cs">
+    <Compile Include="Theories\Initialization.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Theories\CommonMethod.Designer.cs">
-      <DependentUpon>CommonMethod.cs</DependentUpon>
+    <Compile Include="Theories\Initialization.Designer.cs">
+      <DependentUpon>Initialization.cs</DependentUpon>
     </Compile>
-    <Compile Include="Theories\OCR_Recognition.cs">
+    <Compile Include="Theories\Ocr.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Theories\OCR_Recognition.Designer.cs">
-      <DependentUpon>OCR_Recognition.cs</DependentUpon>
+    <Compile Include="Theories\Ocr.Designer.cs">
+      <DependentUpon>Ocr.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

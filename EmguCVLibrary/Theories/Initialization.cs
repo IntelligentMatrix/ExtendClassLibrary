@@ -17,15 +17,15 @@ using EmguCVLibrary;
 
 namespace EmguCVLibrary.Theories
 {
-    public partial class CommonMethod : ProjectBaseMethod
+    public partial class Initialization : ProjectBaseMethod
     {
         #region 构造函数
-        public CommonMethod()
+        public Initialization()
         {
             InitializeComponent();
         }
 
-        public CommonMethod(IContainer container)
+        public Initialization(IContainer container)
         {
             container.Add(this);
 
@@ -34,22 +34,23 @@ namespace EmguCVLibrary.Theories
         #endregion
 
         #region 定义变量
-        ColorConversion ColorConversion;//图像转换类型
-        double Threshold;//阈值化值
-        double ThresholdMaxValue;//阈值化最大值
-        ThresholdType ThresholdType;//阈值化类型
-        OutPutType DstImageType;//输出图像类型
+        public ColorConversion ColorConversion { get; set; }//图像转换类型
+        public double Threshold { get; set; }//阈值化值
+        public double ThresholdMaxValue { get; set; }//阈值化最大值
+        public ThresholdType ThresholdType { get; set; }//阈值化类型
+        public OutPutType DstImageType { get; set; }//输出图像类型
+
         #endregion
 
         #region 重构基类函数
         /// <summary>
-        /// 初始化参数
+        /// 初始化参数 暂时未找到Map自身的方法
         /// </summary>
         public override void InitialParameter()
         { 
-            CommonMethod_Para Para = new CommonMethod_Para();
-            Para = JsonConvert.DeserializeObject<CommonMethod_Para>(Params);//将字符串转换为参数变量
-            //变量赋值
+            Initialization_Para Para = new Initialization_Para();
+            Para = JsonConvert.DeserializeObject<Initialization_Para>(Params);//将字符串转换为参数变量
+            //变量赋值 
             ColorConversion = Para.ColorConversion;
             Threshold = Para.Threshold;
             ThresholdMaxValue = Para.ThresholdMaxValue;
@@ -108,19 +109,21 @@ namespace EmguCVLibrary.Theories
                     break;
             }
 
-            //图像处理
-            if (DstImageType == OutPutType.All)
+            //阈值化
+            if (DstImageType == OutPutType.All)//全彩图像
             {
                 CvInvoke.CvtColor(TmpImage, ImgData.DstImage, ColorConversion);//转化图像
                 CvInvoke.Threshold(ImgData.DstImage, ImgData.DstImage, Threshold, ThresholdMaxValue, ThresholdType);//阈值化图像
             }
-            else
+            else//通道分离图像
             {
                 CvInvoke.Threshold(TmpImage, ImgData.DstImage, Threshold, ThresholdMaxValue, ThresholdType);//阈值化图像
             }
-
             //释放TmpImage
             if (TmpImage != null) TmpImage.Dispose();
+
+            //赋值临时图像
+            ImgData.TmpImage = ImgData.DstImage.Clone();
 
             //Gc回收
             GC.Collect();
@@ -130,7 +133,7 @@ namespace EmguCVLibrary.Theories
     /// <summary>
     /// 本组件的参数变量
     /// </summary>
-    public class CommonMethod_Para
+    public class Initialization_Para
     {
         [DescriptionAttribute("结果图像类型"),
          CategoryAttribute("Setting"),
@@ -166,7 +169,7 @@ namespace EmguCVLibrary.Theories
         /// <summary>
         /// 构造函数
         /// </summary>
-        public CommonMethod_Para()
+        public Initialization_Para()
         {
             DstImageType = OutPutType.All;
             ColorConversion = ColorConversion.Bgra2Gray;

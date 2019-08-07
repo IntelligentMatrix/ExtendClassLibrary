@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CommonLibrary.Define
@@ -26,26 +23,62 @@ namespace CommonLibrary.Define
         /// </summary>
         static ProjectComponentDefine()
         {
-            
+
             componmentParamDictionary = new Dictionary<string, ComponentParam>();//初始化
             //
             /**
              * 图像处理通用组件
              * 二值化处理
              * **/
-            componmentParamDictionary.Add("Emgucv_ComonMethod", new ComponentParam
+            componmentParamDictionary.Add("Initialization", new ComponentParam
             {
-                ComponentType = asm.GetType("EmguCVLibrary.Theories.CommonMethod"),
-                ParamType = asm.GetType("EmguCVLibrary.Theories.CommonMethod_Para")
+                ComponentType = asm.GetType("EmguCVLibrary.Theories.Initialization"),
+                ParamType = asm.GetType("EmguCVLibrary.Theories.Initialization_Para")
             });
             /**
              * 光学字符识别组件
              * 
              * **/
-            componmentParamDictionary.Add("Emgucv_OCR_Recognition", new ComponentParam
+            componmentParamDictionary.Add("Ocr", new ComponentParam
             {
-                ComponentType = asm.GetType("EmguCVLibrary.Theories.OCR_Recognition"),
-                ParamType = asm.GetType("EmguCVLibrary.Theories.OCR_Recognition_Para")
+                ComponentType = asm.GetType("EmguCVLibrary.Theories.Ocr"),
+                ParamType = asm.GetType("EmguCVLibrary.Theories.Ocr_Para")
+            });
+            /**
+             * 膨胀
+             * 
+             * **/
+            componmentParamDictionary.Add("Dilate", new ComponentParam
+            {
+                ComponentType = asm.GetType("EmguCVLibrary.Theories.Dilate"),
+                ParamType = asm.GetType("EmguCVLibrary.Theories.Dilate_Para")
+            });
+            /**
+             * 腐蚀
+             * 
+             * **/
+            componmentParamDictionary.Add("Erode", new ComponentParam
+            {
+                ComponentType = asm.GetType("EmguCVLibrary.Theories.Erode"),
+                ParamType = asm.GetType("EmguCVLibrary.Theories.Erode_Para")
+            });
+            /**
+             * 形态学
+             * 
+             * **/
+            componmentParamDictionary.Add("Morphology", new ComponentParam
+            {
+                ComponentType = asm.GetType("EmguCVLibrary.Theories.Morphology"),
+                ParamType = asm.GetType("EmguCVLibrary.Theories.Morphology_Para")
+            });
+            /**
+             * 自定义查找字符
+             * 
+             * **/
+            componmentParamDictionary.Add("MyCharRec", new ComponentParam
+            {
+                ComponentType = asm.GetType("EmguCVLibrary.Theories.MyCharRec"),
+                ParamType = asm.GetType("EmguCVLibrary.Theories.MyCharRec_Para")
             });
         }
         /// <summary>
@@ -55,7 +88,6 @@ namespace CommonLibrary.Define
         /// <returns></returns>
         public static object CreatInstance(Type type)
         {
-            //return System.Activator.CreateInstance(type);
             return asm.CreateInstance(type.FullName);
         }
     }

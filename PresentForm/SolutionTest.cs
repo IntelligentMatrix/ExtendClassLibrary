@@ -1,16 +1,13 @@
 ﻿using CommonLibrary.CommonMethod;
 using CommonLibrary.Define;
+using CommonLibrary.FormAndUser;
 using DataAccessLibrary.Model;
 using EmguCVLibrary;
 using EmguCVLibrary.Theories;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PresentForm
@@ -30,7 +27,10 @@ namespace PresentForm
         /// <param name="e"></param>
         private void Start_Button_Click(object sender, EventArgs e)
         {
-
+            projectArch.Run(ref imgDataStruct);
+            picShow1.LoadPic(new Bitmap(imgDataStruct.DstImage.Bitmap));
+            if (!imgDataStruct.TmpImage.IsEmpty) picShow_Tmp.LoadPic(new Bitmap(imgDataStruct.TmpImage.Bitmap));
+            if (!imgDataStruct.TplImage.IsEmpty) picShow_Tmlate.LoadPic(new Bitmap(imgDataStruct.TplImage.Bitmap));
         }
         /// <summary>
         /// 停止
@@ -72,17 +72,18 @@ namespace PresentForm
         private void Ini_Button_Click(object sender, EventArgs e)
         {
             DataEFEntity DB = new DataEFEntity();//数据库连接
-            var prolist = (from r in DB.ProjectLists where r.Project.Solution.Name == Environment.MachineName && r.Project.Name == "Project00" select r).ToList();
-            projectArch.Name = "Project00";
+            var prolist = (from r in DB.ProjectLists where r.Project.Solution.Name == Environment.MachineName && r.Project.Name == "Project" select r).ToList();
+            projectArch.Name = "Project";
+            projectArch.ProjectList.Clear();
             //初始化组件及其参数
-            for (int i = 0;i < prolist.Count;i++)
+            for (int i = 0; i < prolist.Count; i++)
             {
                 ProjectList projectList = prolist[i];
                 string component = projectList.Component;
                 //检索是否存在该组件,并追加组件
                 if (ProjectComponentDefine.ComponmentParamDictionary.ContainsKey(component))
                 {
-                    Type type = PlcComponentDefine.ComponmentParamDictionary[component].ComponentType;
+                    Type type = ProjectComponentDefine.ComponmentParamDictionary[component].ComponentType;
                     ProjectBaseMethod projectMethod = (ProjectBaseMethod)ProjectComponentDefine.CreatInstance(type);
                     projectMethod.IniComponent(prolist[i].Component, prolist[i].Paras);
                     projectArch.ProjectList.Add(projectMethod);
@@ -90,6 +91,16 @@ namespace PresentForm
             }
 
 
+        }
+        /// <summary>
+        /// 配置界面
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Config_Button_Click(object sender, EventArgs e)
+        {
+            ConfigForm Test = new ConfigForm();
+            Test.ShowDialog();
         }
     }
 }
