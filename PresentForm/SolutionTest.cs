@@ -28,9 +28,10 @@ namespace PresentForm
         private void Start_Button_Click(object sender, EventArgs e)
         {
             projectArch.Run(ref imgDataStruct);
-            picShow1.LoadPic(new Bitmap(imgDataStruct.DstImage.Bitmap));
-            if (!imgDataStruct.TmpImage.IsEmpty) picShow_Tmp.LoadPic(new Bitmap(imgDataStruct.TmpImage.Bitmap));
-            if (!imgDataStruct.TplImage.IsEmpty) picShow_Tmlate.LoadPic(new Bitmap(imgDataStruct.TplImage.Bitmap));
+            if (!imgDataStruct.SrcImage.IsEmpty) picShow_Src.LoadPic(new Bitmap(imgDataStruct.SrcImage.Bitmap));
+            if (!imgDataStruct.DstImage.IsEmpty) picShow_Dst.LoadPic(new Bitmap(imgDataStruct.DstImage.Bitmap));
+           // if (!imgDataStruct.TmpImage.IsEmpty) picShow_Temp.LoadPic(new Bitmap(imgDataStruct.TmpImage.Bitmap));
+            //if (!imgDataStruct.TplImage.IsEmpty) picShow_Tmlate.LoadPic(new Bitmap(imgDataStruct.TplImage.Bitmap));
         }
         /// <summary>
         /// 停止

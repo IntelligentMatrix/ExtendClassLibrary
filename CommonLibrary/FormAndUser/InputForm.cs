@@ -8,6 +8,7 @@ namespace CommonLibrary.FormAndUser
     {
         public InputForm()
         {
+            this.StartPosition = FormStartPosition.CenterScreen;
             InitializeComponent();
         }
         public event ConfirmData Confirm;//确认数据事件

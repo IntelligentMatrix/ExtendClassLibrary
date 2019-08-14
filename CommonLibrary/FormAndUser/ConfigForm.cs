@@ -16,9 +16,9 @@ namespace CommonLibrary.FormAndUser
         #region 
         public ConfigForm(string host)
         {
+            this.StartPosition = FormStartPosition.CenterScreen;
             InitializeComponent();
-            SolutionName = host;
-
+            SolutionName = host;            
         }
         public ConfigForm() : this(Environment.MachineName)
         {
@@ -28,6 +28,7 @@ namespace CommonLibrary.FormAndUser
         public string SolutionName { get; set; }//主机名
         DataEFEntity DB = new DataEFEntity();//数据库连接
         SolutionData solutionData = new SolutionData();//方案数据
+
         /// <summary>
         /// 页面加载
         /// 1、加载主机名
@@ -38,16 +39,9 @@ namespace CommonLibrary.FormAndUser
         /// <param name="e"></param>
         private void ConfigForm_Load(object sender, EventArgs e)
         {
-
+            
             //初始化Solution名称
             textBox_Solution.Text = SolutionName;
-
-            //检测Solution是否存在
-            //var Solution = from c in DB.Solutions where c.SolutionName == SolutionName select c;
-            //if(Solution == null)//如果为空，则创建Solution
-            //{
-
-            //}
 
             //分组初始化 
             comboBox_Option.DataSource = MyLibrary.BindComboxEnumType<OptionType>.BindTyps;
@@ -68,21 +62,27 @@ namespace CommonLibrary.FormAndUser
         private void ComboBox_Option_SelectedIndexChanged(object sender, EventArgs e)
         {
             string Option_Text = comboBox_Option.Text;
-            //该类型组件列表刷新
-            //listView_ComponentList.Items.Clear();
-            //listView_ComponentList.Items.AddRange(DB.GetPlc(Option_Text).Select(o => o.Name).ToList().ToArray());
+            //组件列表刷新
             RefreshOptionInfo();
             InitialOptionComponentListView();
             RefreshComponent();
         }
+        bool AddOK = false;//Option添加成功标志
+        /// <summary>
+        /// 添加
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         private bool Add(string name)
         {
             DB.AddSolution(SolutionName);//添加solution
+            listView_OptionComponent.Items.Clear();
             var solutionQuery = from r in DB.Solutions where r.Name == SolutionName select r;
             var solution = solutionQuery.FirstOrDefault();
             if (solution == null)
             {
                 MessageBox.Show("解决方案不存在！");
+                Differ_Option_OR_List = false;
                 return false;
             }
             //功能代码
@@ -175,11 +175,13 @@ namespace CommonLibrary.FormAndUser
                             MessageBox.Show("Option Error!");
                             return false;
                     }
+                    Differ_Option_OR_List = false;
                     return true;
                 }
                 else
                 {
                     MessageBox.Show("Option Error!");
+                    Differ_Option_OR_List = false;
                     return false;
                 }
             }
@@ -205,7 +207,7 @@ namespace CommonLibrary.FormAndUser
                                 Type = "Plc",
                             });
                             DB.SaveChanges();
-                            return true;
+                            break;
                         case OptionType.Project:
                             var projectQuery = from r in DB.Projects where r.Solution.Name == SolutionName && r.Name == name select r;
                             Project project = projectQuery.FirstOrDefault();
@@ -242,14 +244,18 @@ namespace CommonLibrary.FormAndUser
                             MessageBox.Show("Option Error!");
                             return false;
                     }
+                    Differ_Option_OR_List = false;
+                    AddOK = true;//Option添加成功标志
                     return true;
                 }
                 else
                 {
                     MessageBox.Show("Option Error!");
+                    Differ_Option_OR_List = false;
                     return false;
                 }
             }
+            
         }
         bool Differ_Option_OR_List = false;//false - option，true - optionlist
         /// <summary>
@@ -259,6 +265,7 @@ namespace CommonLibrary.FormAndUser
         /// <param name="e"></param>
         private void Button_AddOption_Click(object sender, EventArgs e)
         {
+            AddOK = false;
             //添加页面
             InputForm inputForm = new InputForm();
             inputForm.Confirm += Add;
@@ -266,6 +273,12 @@ namespace CommonLibrary.FormAndUser
 
             //刷新数据
             RefreshOptionInfo();
+            //置为最新
+            if (AddOK)//Option添加成功标志
+            {
+                if (comboBox_OptionList.Items.Count > 0) comboBox_OptionList.SelectedIndex = comboBox_OptionList.Items.Count - 1;
+                AddOK = false;
+            }
             InitialOptionComponentListView();
             RefreshComponent();
 
@@ -414,6 +427,7 @@ namespace CommonLibrary.FormAndUser
 
             //刷新数据
             RefreshOptionInfo();
+
             InitialOptionComponentListView();
             RefreshComponent();
 
@@ -698,14 +712,6 @@ namespace CommonLibrary.FormAndUser
         }
 
         /// <summary>
-        /// 刷新组件列表
-        /// </summary>
-        private void InitialComponentListView()
-        {
-
-        }
-
-        /// <summary>
         /// 组件列表选中修改事件
         /// </summary>
         /// <param name="sender"></param>
@@ -759,7 +765,6 @@ namespace CommonLibrary.FormAndUser
             //清除标志
             Differ_Option_OR_List = false;
             //刷新数据
-            RefreshOptionInfo();
             InitialOptionComponentListView();
             RefreshComponent();
         }
@@ -945,6 +950,15 @@ namespace CommonLibrary.FormAndUser
         private void Button_Exit_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+        /// <summary>
+        /// option选项Index改变
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ComboBox_OptionList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            InitialOptionComponentListView();
         }
     }
 }

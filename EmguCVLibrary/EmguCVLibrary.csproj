@@ -80,6 +80,12 @@
     <Compile Include="MyException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestClass.cs" />
+    <Compile Include="Theories\Ann_Recog.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Theories\Ann_Recog.Designer.cs">
+      <DependentUpon>Ann_Recog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Theories\Dilate.cs">
       <SubType>Component</SubType>
     </Compile>

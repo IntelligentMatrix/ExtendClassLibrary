@@ -80,6 +80,15 @@ namespace CommonLibrary.Define
                 ComponentType = asm.GetType("EmguCVLibrary.Theories.MyCharRec"),
                 ParamType = asm.GetType("EmguCVLibrary.Theories.MyCharRec_Para")
             });
+            /**
+             * 自定义查找字符
+             * 
+             * **/
+            componmentParamDictionary.Add("Ann_Recog", new ComponentParam
+            {
+                ComponentType = asm.GetType("EmguCVLibrary.Theories.Ann_Recog"),
+                ParamType = asm.GetType("EmguCVLibrary.Theories.Ann_Recog_Para")
+            });
         }
         /// <summary>
         /// 创建实例
